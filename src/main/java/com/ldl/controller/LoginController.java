@@ -17,11 +17,18 @@ public class LoginController {
     @Autowired
     private UsersService usersService;
 
-    @GetMapping("/")
-    public String showLoginForm(Model model) {
-
-         return "login";
+    @GetMapping("/toLogin")
+    public String toLogin() {
+        // 直接返回逻辑视图名，由视图解析器拼接路径转发到 login.jsp
+        return "login";
     }
+
+//
+//    @GetMapping("/")
+//    public String showLoginForm(Model model) {
+//
+//         return "login";
+//    }
 
     @PostMapping("/login")
     public String login(@RequestParam String username,
