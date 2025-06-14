@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.ApprovedPurchaseDemandMapper">
+
+    <resultMap id="approvedDemandResultMap" type="com.ldl.entity.ApprovedPurchaseDemand">
+        <id property="approvedId" column="approved_id"/>
+        <result property="demandId" column="demand_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="demandQuantity" column="demand_quantity"/>
+        <result property="demandDate" column="demand_date"/>
+        <result property="approvedAt" column="approved_at"/>
+        <result property="deadlineDate" column="deadline_date"/>
+        <result property="status" column="status"/>
+        <result property="winningSupplierId" column="winning_supplier_id"/>
+        <result property="winningPrice" column="winning_price"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+
+        <!-- 关联产品 -->
+        <association property="product" column="product_id"
+                     javaType="com.ldl.entity.Product"
+                     select="com.ldl.dao.ProductMapper.getProductById"/>
+
+        <!-- 关联中标供应商 -->
+        <association property="winningSupplier" column="winning_supplier_id"
+                     javaType="com.ldl.entity.Supplier"
+                     select="com.ldl.dao.SupplierMapper.getSupplierById"/>
+    </resultMap>
+
+    <select id="getAllApprovedDemands" resultMap="approvedDemandResultMap">
+        SELECT * FROM approved_purchase_demands
+    </select>
+
+    <select id="getApprovedDemandById" resultMap="approvedDemandResultMap">
+        SELECT * FROM approved_purchase_demands WHERE approved_id = #{approvedId}
+    </select>
+
+    <select id="getApprovedDemandsByStatus" resultMap="approvedDemandResultMap">
+        SELECT * FROM approved_purchase_demands WHERE status = #{status}
+    </select>
+
+    <insert id="insertApprovedDemand" parameterType="com.ldl.entity.ApprovedPurchaseDemand">
+        INSERT INTO approved_purchase_demands
+        (demand_id, product_id, demand_quantity, demand_date, approved_at, deadline_date, status)
+        VALUES
+            (#{demandId}, #{productId}, #{demandQuantity}, #{demandDate}, #{approvedAt}, #{deadlineDate}, #{status})
+    </insert>
+
+    <update id="updateApprovedDemand" parameterType="com.ldl.entity.ApprovedPurchaseDemand">
+        UPDATE approved_purchase_demands
+        SET demand_id = #{demandId},
+            product_id = #{productId},
+            demand_quantity = #{demandQuantity},
+            demand_date = #{demandDate},
+            approved_at = #{approvedAt},
+            deadline_date = #{deadlineDate},
+            status = #{status}
+        WHERE approved_id = #{approvedId}
+    </update>
+
+    <update id="setWinningSupplier" parameterType="com.ldl.entity.ApprovedPurchaseDemand">
+        UPDATE approved_purchase_demands
+        SET winning_supplier_id = #{winningSupplierId},
+            winning_price = #{winningPrice},
+            status = 1  -- 设置为"关闭报价"状态
+        WHERE approved_id = #{approvedId}
+    </update>
+</mapper>

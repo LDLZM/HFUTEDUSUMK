@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.InventoryMapper">
+
+    <resultMap id="inventoryResultMap" type="com.ldl.entity.Inventory">
+        <id property="inventoryId" column="inventory_id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="lastUpdated" column="last_updated"/>
+        <result property="productId" column="product_id"/>
+        <association property="product" column="product_id"
+        javaType="com.ldl.entity.Product"
+        select = "com.ldl.dao.ProductMapper.getProductById">
+        </association>
+    </resultMap>
+
+    <select id="getAllInventory" resultMap="inventoryResultMap">
+        SELECT *
+        FROM hfut_edusupermarket.inventory
+    </select>
+
+    <select id="getInventoryById" resultMap="inventoryResultMap">
+        SELECT *
+        FROM hfut_edusupermarket.inventory
+        WHERE inventory.inventory_id = #{inventoryId}
+    </select>
+
+    <select id="getInventoryByPId" resultMap="inventoryResultMap">
+        select *
+        from hfut_edusupermarket.inventory
+        where inventory.product_id =#{productId}
+    </select>
+
+
+    <insert id="insertInventory" parameterType="com.ldl.entity.Inventory">
+        INSERT INTO hfut_edusupermarket.inventory
+            (hfut_edusupermarket.inventory.product_id, hfut_edusupermarket.inventory.quantity, hfut_edusupermarket.inventory.last_updated)
+        VALUES (#{productId}, #{quantity}, #{lastUpdated})
+    </insert>
+
+    <update id="updateInventory" parameterType="com.ldl.entity.Inventory">
+        UPDATE hfut_edusupermarket.inventory
+        SET hfut_edusupermarket.inventory.product_id = #{productId},
+            hfut_edusupermarket.inventory.quantity = #{quantity},
+            hfut_edusupermarket.inventory.last_updated = #{lastUpdated}
+        WHERE hfut_edusupermarket.inventory.inventory_id = #{inventoryId}
+    </update>
+
+    <delete id="deleteInventory" parameterType="java.lang.Integer">
+        DELETE FROM hfut_edusupermarket.inventory WHERE hfut_edusupermarket.inventory.inventory_id = #{inventoryId}
+    </delete>
+
+
+    <select id="selectByKeyword" resultMap="inventoryResultMap" parameterType="string">
+        SELECT *
+        FROM hfut_edusupermarket.products left outer join inventory  on products.product_id = inventory.product_id
+        WHERE products.product_name LIKE #{keyword}
+    </select>
+</mapper>

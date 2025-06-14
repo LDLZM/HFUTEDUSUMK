@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.ProductCheckMapper">
+
+    <resultMap id="ProductCheckResultMap" type="com.ldl.entity.ProductCheck">
+        <id property="id" column="id"/>
+        <id property="approvedId" column="order_id"/>
+        <id property="isOK" column="is_ok"/>
+        <!-- 关联产品 -->
+        <association property="approvedPurchaseDemand" column="order_id"
+                     javaType="com.ldl.entity.ApprovedPurchaseDemand"
+                     select="com.ldl.dao.ApprovedPurchaseDemandMapper.getApprovedDemandById"/>
+    </resultMap>
+
+    <select id="getAllProductCheck" resultMap="ProductCheckResultMap">
+        SELECT * FROM product_check
+    </select>
+
+
+    <select id="getProductCheckById" resultMap="ProductCheckResultMap">
+        SELECT * FROM product_check WHERE id = #{id}
+    </select>
+
+    <update id="update" parameterType="com.ldl.entity.ProductCheck">
+        UPDATE hfut_edusupermarket.product_check
+        SET is_ok = #{isOK},
+            remarks = #{remarks}
+        WHERE id = #{id}
+    </update>
+
+</mapper>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.SupplierBidMapper">
+
+    <resultMap id="supplierBidResultMap" type="com.ldl.entity.SupplierBid">
+        <id property="bidId" column="bid_id"/>
+        <result property="approvedId" column="approved_id"/>
+        <result property="supplierId" column="supplier_id"/>
+        <result property="bidPrice" column="bid_price"/>
+        <result property="deliveryDays" column="delivery_days"/>
+        <result property="bidTime" column="bid_time"/>
+        <result property="isWinning" column="is_winning"/>
+        <result property="bidRemarks" column="bid_remarks"/>
+
+        <!-- 关联已审核需求 -->
+        <association property="demand" column="approved_id"
+                     javaType="com.ldl.entity.ApprovedPurchaseDemand"
+                     select="com.ldl.dao.ApprovedPurchaseDemandMapper.getApprovedDemandById"/>
+
+        <!-- 关联供应商 -->
+        <association property="supplier" column="supplier_id"
+                     javaType="com.ldl.entity.Supplier"
+                     select="com.ldl.dao.SupplierMapper.getSupplierById"/>
+    </resultMap>
+
+    <select id="getAllBids" resultMap="supplierBidResultMap">
+        SELECT * FROM supplier_bids
+    </select>
+
+    <select id="getBidById" resultMap="supplierBidResultMap">
+        SELECT * FROM supplier_bids WHERE bid_id = #{bidId}
+    </select>
+
+    <select id="getBidsByApprovedId" resultMap="supplierBidResultMap">
+        SELECT * FROM supplier_bids WHERE approved_id = #{approvedId}
+    </select>
+
+    <select id="getBidsBySupplierId" resultMap="supplierBidResultMap">
+        SELECT * FROM supplier_bids WHERE supplier_id = #{supplierId}
+    </select>
+
+    <insert id="insertBid" parameterType="com.ldl.entity.SupplierBid">
+        INSERT INTO supplier_bids
+        (approved_id, supplier_id, bid_price, delivery_days, bid_remarks)
+        VALUES
+            (#{approvedId}, #{supplierId}, #{bidPrice}, #{deliveryDays}, #{bidRemarks})
+    </insert>
+
+    <update id="updateBidStatus" parameterType="com.ldl.entity.SupplierBid">
+        UPDATE supplier_bids
+        SET is_winning = #{isWinning}
+        WHERE bid_id = #{bidId}
+    </update>
+
+
+
+    <update id="updateBid" parameterType="com.ldl.entity.SupplierBid">
+        UPDATE hfut_edusupermarket.supplier_bids
+        SET approved_id = #{approvedId},
+            supplier_id = #{supplierId},
+            bid_price = #{bidPrice},
+            delivery_days= #{deliveryDays},
+            bid_time = #{bidTime},
+            is_Winning= #{isWinning},
+            bid_remarks= #{bidRemarks}
+        WHERE bid_id = #{bidId}
+    </update>
+</mapper>

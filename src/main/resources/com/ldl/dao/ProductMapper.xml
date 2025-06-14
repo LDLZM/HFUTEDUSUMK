@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.ProductMapper">
+
+    <resultMap id="productResultMap" type="com.ldl.entity.Product">
+        <id property="id" column="product_id"/>
+        <result property="name" column="product_name"/>
+        <result property="category" column="category"/>
+        <result property="unitPrice" column="unit_price"/>
+    </resultMap>
+
+    <select id="getAllProduct" resultMap="productResultMap">
+        SELECT *
+        FROM hfut_edusupermarket.products
+    </select>
+
+    <select id="getProductById" resultMap="productResultMap">
+        SELECT *
+        FROM hfut_edusupermarket.products
+        WHERE hfut_edusupermarket.products.product_id = #{id}
+    </select>
+
+    <select id="getProductByName" resultMap="productResultMap">
+        SELECT*
+        FROM hfut_edusupermarket.products
+        WHERE product_name = #{name}
+    </select>
+
+
+    <select id="selectByKeyword" resultMap="productResultMap" parameterType="string">
+        SELECT *
+        FROM hfut_edusupermarket.products
+        WHERE products.product_name LIKE #{keyword} OR products.category LIKE #{keyword}
+    </select>
+    <insert id="insertProduct" parameterType="com.ldl.entity.Product">
+        INSERT INTO hfut_edusupermarket.products
+            (hfut_edusupermarket.products.product_name, hfut_edusupermarket.products.category, hfut_edusupermarket.products.unit_price)
+        VALUES (#{name}, #{category}, #{unitPrice})
+    </insert>
+
+    <update id="updateProduct" parameterType="com.ldl.entity.Product">
+        UPDATE hfut_edusupermarket.products
+        SET hfut_edusupermarket.products.product_name = #{name},
+            hfut_edusupermarket.products.category = #{category},
+            hfut_edusupermarket.products.unit_price = #{unitPrice}
+        WHERE hfut_edusupermarket.products.product_id = #{id}
+    </update>
+
+    <delete id="deleteProduct" parameterType="java.lang.Integer">
+        DELETE FROM hfut_edusupermarket.products WHERE hfut_edusupermarket.products.product_id = #{id}
+    </delete>
+</mapper>

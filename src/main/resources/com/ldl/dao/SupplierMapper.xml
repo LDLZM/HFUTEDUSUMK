@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.SupplierMapper">
+
+    <resultMap id="supplierResultMap" type="com.ldl.entity.Supplier">
+        <id property="supplierId" column="supplier_id"/>
+        <result property="supplierName" column="supplier_name"/>
+        <result property="contactPerson" column="contact_person"/>
+        <result property="contactPhone" column="contact_phone"/>
+        <result property="contactEmail" column="contact_email"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+    </resultMap>
+
+    <select id="getAllSuppliers" resultMap="supplierResultMap">
+        SELECT * FROM suppliers
+    </select>
+
+    <select id="getSupplierById" resultMap="supplierResultMap" parameterType="int">
+        SELECT * FROM suppliers WHERE supplier_id = #{supplierId}
+    </select>
+
+    <insert id="insertSupplier" parameterType="com.ldl.entity.Supplier">
+        INSERT INTO suppliers
+            (supplier_name, contact_person, contact_phone, contact_email, status)
+        VALUES
+            (#{supplierName}, #{contactPerson}, #{contactPhone}, #{contactEmail}, #{status})
+    </insert>
+
+    <update id="updateSupplier" parameterType="com.ldl.entity.Supplier">
+        UPDATE suppliers
+        SET supplier_name = #{supplierName},
+            contact_person = #{contactPerson},
+            contact_phone = #{contactPhone},
+            contact_email = #{contactEmail},
+            status = #{status}
+        WHERE supplier_id = #{supplierId}
+    </update>
+
+    <delete id="deleteSupplier" parameterType="int">
+        DELETE FROM suppliers WHERE supplier_id = #{supplierId}
+    </delete>
+
+    <select id="searchSuppliersByName" resultMap="supplierResultMap" parameterType="string">
+        SELECT * FROM suppliers WHERE supplier_name LIKE #{keyword}
+    </select>
+</mapper>

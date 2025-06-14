@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.FinancialRecordMapper">
+
+    <!-- 基础查询结果映射 -->
+    <resultMap id="BaseResultMap" type="com.ldl.entity.FinancialRecord">
+        <id column="record_id" property="recordId" />
+        <result column="order_id" property="orderId" />
+        <result column="bid_id" property="bidId" />
+        <result column="transaction_type" property="transactionType" />
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="transaction_date" property="transactionDate" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="description" property="description" />
+        <result column="status" property="status" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 根据ID查询财务记录 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM financial_records WHERE record_id = #{recordId}
+    </select>
+
+    <!-- 查询所有财务记录 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM financial_records ORDER BY transaction_date DESC
+    </select>
+
+
+    <!-- 插入新财务记录 -->
+    <insert id="insert" parameterType="com.ldl.entity.FinancialRecord" useGeneratedKeys="true" keyProperty="recordId">
+        INSERT INTO financial_records (
+            order_id, bid_id, transaction_type, amount, transaction_date,
+            payment_method, description, status
+        ) VALUES (
+                     #{orderId}, #{bidId}, #{transactionType}, #{amount}, #{transactionDate},
+                     #{paymentMethod}, #{description}, #{status}
+                 )
+    </insert>
+
+    <!-- 更新财务记录 -->
+    <update id="update" parameterType="com.ldl.entity.FinancialRecord">
+        UPDATE financial_records
+        SET
+            order_id = #{orderId},
+            bid_id = #{bidId},
+            transaction_type = #{transactionType},
+            amount = #{amount},
+            transaction_date = #{transactionDate},
+            payment_method = #{paymentMethod},
+            description = #{description},
+            status = #{status}
+        WHERE record_id = #{recordId}
+    </update>
+
+    <!-- 删除财务记录 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM financial_records WHERE record_id = #{recordId}
+    </delete>
+
+    <select id="selectBySid" parameterType="integer" resultMap="BaseResultMap">
+        SELECT * from financial_records where order_id = #{orderId}
+    </select>
+
+</mapper>

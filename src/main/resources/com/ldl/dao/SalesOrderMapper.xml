@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.SalesOrderMapper">
+
+    <!-- 基础查询结果映射 -->
+    <resultMap id="BaseResultMap" type="com.ldl.entity.SalesOrder">
+        <id column="order_id" property="orderId" />
+        <result column="order_date" property="orderDate" />
+        <result column="product_id" property="productId" />
+        <result column="quantity" property="quantity" />
+        <result column="total_amount" property="totalAmount" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="payment_status" property="paymentStatus" />
+        <result column="remarks" property="remarks"/>
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+    </resultMap>
+
+    <!-- 根据ID查询订单 -->
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT * FROM sales_orders WHERE order_id = #{orderId}
+    </select>
+
+    <!-- 查询所有订单 -->
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT * FROM sales_orders ORDER BY order_date DESC
+    </select>
+
+
+    <!-- 插入新订单 -->
+    <insert id="insert" parameterType="com.ldl.entity.SalesOrder" useGeneratedKeys="true" keyProperty="orderId">
+        INSERT INTO sales_orders (
+             order_date, product_id, quantity,
+            total_amount, payment_method, payment_status, remarks
+        ) VALUES (
+                     #{orderDate}, #{productId}, #{quantity},
+                     #{totalAmount}, #{paymentMethod}, #{paymentStatus}, #{remarks}
+                 )
+    </insert>
+
+    <!-- 更新订单 -->
+    <update id="update" parameterType="com.ldl.entity.SalesOrder">
+        UPDATE sales_orders
+        SET
+            order_date = #{orderDate},
+            product_id = #{productId},
+            quantity = #{quantity},
+            total_amount = #{totalAmount},
+            payment_method = #{paymentMethod},
+            payment_status = #{paymentStatus},
+            remarks = #{remarks}
+        WHERE order_id = #{orderId}
+    </update>
+
+    <!-- 删除订单 -->
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM sales_orders WHERE order_id = #{orderId}
+    </delete>
+
+    <update id="payOrder">
+        UPDATE sales_orders
+        SET
+            payment_status = 1,
+            payment_method = #{paymentMethod},
+            updated_at = NOW()
+        WHERE order_id = #{orderId}
+    </update>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.UsersMapper">
+
+    <resultMap id="userResultMap" type="com.ldl.entity.EduSupermarketUsers">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <association property="role" javaType="com.ldl.entity.EduSupermarketRoles">
+            <id property="roleId" column="role_id"/>
+            <result property="roleName" column="role_name"/>
+            <result property="homePage" column="home_page"/>
+            <result property="description" column="description"/>
+        </association>
+    </resultMap>
+
+    <select id="getAllUsers" resultMap="userResultMap">
+        SELECT u.*, r.*
+        FROM edu_supermarket_users u
+                 JOIN edu_supermarket_roles r ON u.role_id = r.role_id
+    </select>
+
+    <select id="getUserById" resultMap="userResultMap">
+        SELECT u.*, r.*
+        FROM edu_supermarket_users u
+                 JOIN edu_supermarket_roles r ON u.role_id = r.role_id
+        WHERE u.id = #{id}
+    </select>
+
+    <select id="getUserByUsername" resultMap="userResultMap">
+        SELECT u.*, r.*
+        FROM edu_supermarket_users u
+                 JOIN edu_supermarket_roles r ON u.role_id = r.role_id
+        WHERE u.username = #{username}
+    </select>
+    <!-- UsersMapper.xml -->
+    <select id="selectByKeyword" resultMap="userResultMap" parameterType="string">
+        SELECT u.*, r.role_name
+        FROM edu_supermarket_users u
+                 LEFT JOIN edu_supermarket_roles r ON u.role_id = r.role_id
+        WHERE u.username LIKE #{keyword} OR r.role_name LIKE #{keyword}
+    </select>
+
+    <insert id="insertUser" parameterType="com.ldl.entity.EduSupermarketUsers">
+        INSERT INTO edu_supermarket_users
+            (username, password, role_id, status)
+        VALUES (#{username}, #{password}, #{role.roleId}, #{status})
+    </insert>
+
+    <update id="updateUser" parameterType="com.ldl.entity.EduSupermarketUsers">
+        UPDATE edu_supermarket_users
+        SET username = #{username},
+            password = #{password},
+            role_id = #{role.roleId},
+            status = #{status}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        DELETE FROM edu_supermarket_users WHERE id = #{id}
+    </delete>
+</mapper>

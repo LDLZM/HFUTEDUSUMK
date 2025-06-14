@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.RolesMapper">
+
+    <resultMap id="roleResultMap" type="com.ldl.entity.EduSupermarketRoles">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+        <result property="homePage" column="home_page"/>
+        <result property="description" column="description"/>
+    </resultMap>
+
+    <select id="getAllRoles" resultMap="roleResultMap">
+        SELECT * FROM edu_supermarket_roles
+    </select>
+
+    <select id="getRoleById" resultMap="roleResultMap">
+        SELECT * FROM edu_supermarket_roles WHERE role_id = #{roleId}
+    </select>
+
+    <select id="getRoleByName" resultMap="roleResultMap">
+        SELECT * FROM edu_supermarket_roles WHERE role_name = #{roleName}
+    </select>
+
+    <insert id="insertRole" parameterType="com.ldl.entity.EduSupermarketRoles">
+        INSERT INTO edu_supermarket_roles
+            (role_name, home_page, description)
+        VALUES (#{roleName}, #{homePage}, #{description})
+    </insert>
+
+    <update id="updateRole" parameterType="com.ldl.entity.EduSupermarketRoles">
+        UPDATE edu_supermarket_roles
+        SET role_name = #{roleName},
+            home_page = #{homePage},
+            description = #{description}
+        WHERE role_id = #{roleId}
+    </update>
+
+    <delete id="deleteRole" parameterType="java.lang.Integer">
+        DELETE FROM edu_supermarket_roles WHERE role_id = #{roleId}
+    </delete>
+</mapper>    

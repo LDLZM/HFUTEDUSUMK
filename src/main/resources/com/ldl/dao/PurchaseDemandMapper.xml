@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldl.dao.PurchaseDemandMapper">
+
+    <resultMap id="demandResultMap" type="com.ldl.entity.PurchaseDemand">
+        <id property="demandId" column="demand_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="demandQuantity" column="demand_quantity"/>
+        <result property="demandDate" column="demand_date"/>
+        <result property="is_closed" column="is_closed"/>
+        <association property="product" column="product_id"
+                     javaType="com.ldl.entity.Product"
+                     select="com.ldl.dao.ProductMapper.getProductById">
+        </association>
+    </resultMap>
+
+    <select id="getAllDemands" resultMap="demandResultMap">
+        SELECT *
+        FROM hfut_edusupermarket.purchase_demands
+    </select>
+
+    <select id="getDemandById" resultMap="demandResultMap">
+        SELECT *
+        FROM hfut_edusupermarket.purchase_demands
+        WHERE demand_id = #{demandId}
+    </select>
+
+    <insert id="insertDemand" parameterType="com.ldl.entity.PurchaseDemand">
+        INSERT INTO hfut_edusupermarket.purchase_demands
+            (product_id, demand_quantity, demand_date, is_closed)
+        VALUES (#{productId}, #{demandQuantity}, #{demandDate}, #{is_closed})
+    </insert>
+
+    <update id="updateDemand" parameterType="com.ldl.entity.PurchaseDemand">
+        UPDATE hfut_edusupermarket.purchase_demands
+        SET product_id = #{productId},
+            demand_quantity = #{demandQuantity},
+            demand_date = #{demandDate},
+            is_closed = #{is_closed}
+        WHERE demand_id = #{demandId}
+    </update>
+
+    <delete id="deleteDemand" parameterType="java.lang.Integer">
+        DELETE FROM hfut_edusupermarket.purchase_demands
+        WHERE demand_id = #{demandId}
+    </delete>
+
+    <select id="selectByKeyword" resultMap="demandResultMap" parameterType="string">
+        SELECT pd.*
+        FROM hfut_edusupermarket.purchase_demands pd
+                 JOIN hfut_edusupermarket.products p ON pd.product_id = p.product_id
+        WHERE p.product_name LIKE #{keyword}
+    </select>
+
+    <select id="getOpenDemands" resultMap="demandResultMap">
+        SELECT *
+        FROM hfut_edusupermarket.purchase_demands
+        WHERE is_closed = 0
+    </select>
+</mapper>
