@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+         import="com.ldl.entity.EduSupermarketUsers"
+         session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -153,6 +155,17 @@
   </style>
 </head>
 <body>
+<c:if test="${not empty sessionScope.currentUser}">
+  <c:set var="currentUser" value="${sessionScope.currentUser}" />
+
+  <p>用户ID：${currentUser.id}</p>
+  <p>用户名：${currentUser.username}</p>
+</c:if>
+
+<c:if test="${empty sessionScope.currentUser}">
+  <p>未登录或会话已过期</p>
+  <a href="login">点击登录</a>
+</c:if>
 <div class="container">
 
   <c:if test="${not empty error}">
@@ -171,7 +184,13 @@
 
       <div class="form-group">
         <label>供应商编号</label>
-        <input type="text" name="supplierId" required>
+        <!-- 使用EL表达式获取当前用户ID并设为只读 -->
+        <input type="text" name="supplierId" value="${currentUser.id}" class="readonly-input" readonly required>
+      </div>
+
+      <div class="form-group">
+        <label>报价单编号</label>
+        <input type="text" name="bidId" >
       </div>
       <div class="form-group">
         <label>报价金额 (元):</label>

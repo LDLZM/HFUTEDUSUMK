@@ -5,37 +5,19 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 public class SalesOrder {
-    private Integer orderId;
+    private String orderId;
     private Timestamp orderDate;
-    private Integer productId;
+    private String productId;
     private Integer quantity;
     private float totalAmount;
     private String paymentMethod;
     private Integer paymentStatus;
     private String remarks;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-
-    public SalesOrder() {
-    }
-
-    public SalesOrder(Integer orderId, String orderNumber, Timestamp orderDate, Integer productId, Integer quantity, float totalAmount, String paymentMethod, Integer paymentStatus, String remarks, Timestamp createdAt, Timestamp updatedAt) {
-        this.orderId = orderId;
-        this.orderDate = orderDate;
-        this.productId = productId;
-        this.quantity = quantity;
-        this.totalAmount = totalAmount;
-        this.paymentMethod = paymentMethod;
-        this.paymentStatus = paymentStatus;
-        this.remarks = remarks;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
 
     @Override
     public String toString() {
         return "SalesOrder{" +
-                "orderId=" + orderId +
+                "orderId='" + orderId + '\'' +
                 ", orderDate=" + orderDate +
                 ", productId=" + productId +
                 ", quantity=" + quantity +
@@ -43,19 +25,16 @@ public class SalesOrder {
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", paymentStatus=" + paymentStatus +
                 ", remarks='" + remarks + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
                 '}';
     }
 
-    public Integer getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
-
 
     public Timestamp getOrderDate() {
         return orderDate;
@@ -65,11 +44,11 @@ public class SalesOrder {
         this.orderDate = orderDate;
     }
 
-    public Integer getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(Integer productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
@@ -113,19 +92,17 @@ public class SalesOrder {
         this.remarks = remarks;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public SalesOrder() {
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Timestamp getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(Timestamp updatedAt) {
-        this.updatedAt = updatedAt;
+    public SalesOrder(String orderId, Timestamp orderDate, String productId, Integer quantity, float totalAmount, String paymentMethod, Integer paymentStatus, String remarks) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.totalAmount = totalAmount;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+        this.remarks = remarks;
     }
 }

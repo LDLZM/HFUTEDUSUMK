@@ -171,7 +171,6 @@
 <body>
 <div class="container">
     <div class="page-header">
-        <img src="../images/xh.png" alt="学校校徽" class="school-logo">
         <h1>编辑商品</h1>
     </div>
 
@@ -188,8 +187,72 @@
 
             <div class="form-group">
                 <label>商品类别:</label>
-                <input type="text" name="category" required value="${product.category}">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        <button type="button" class="category-btn bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-full transition-all" data-value="食品">食品</button>
+                        <button type="button" class="category-btn bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-full transition-all" data-value="文具">文具</button>
+                        <button type="button" class="category-btn bg-blue-100 hover:bg-blue-200 text-blue-800 px-4 py-2 rounded-full transition-all" data-value="日用品">日用品</button>
+                    </div>
+                    <div class="relative">
+                        <input type="text" name="category" required placeholder="${product.category}" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
+                    </div>
+                </div>
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const categoryButtons = document.querySelectorAll('.category-btn');
+                    const categoryInput = document.querySelector('input[name="category"]');
+                    const clearButton = document.getElementById('clear-btn');
+
+                    // 点击类别按钮
+                    categoryButtons.forEach(button => {
+                        button.addEventListener('click', function() {
+                            categoryInput.value = this.getAttribute('data-value');
+                            updateSelectedState();
+                        });
+                    });
+
+                    // 输入框内容变化时
+                    categoryInput.addEventListener('input', function() {
+                        updateSelectedState();
+                    });
+
+                    // 清除按钮点击事件
+                    clearButton.addEventListener('click', function() {
+                        categoryInput.value = '';
+                        clearButton.classList.add('hidden');
+                    });
+
+                    // 更新选中状态和清除按钮显示
+                    function updateSelectedState() {
+                        // 重置所有按钮样式
+                        categoryButtons.forEach(button => {
+                            button.classList.remove('bg-blue-500', 'text-white');
+                            button.classList.add('bg-blue-100', 'text-blue-800');
+                        });
+
+                        // 检查是否与某个按钮值匹配
+                        const inputValue = categoryInput.value.trim();
+                        let matched = false;
+                        categoryButtons.forEach(button => {
+                            if (button.getAttribute('data-value') === inputValue) {
+                                button.classList.remove('bg-blue-100', 'text-blue-800');
+                                button.classList.add('bg-blue-500', 'text-white');
+                                matched = true;
+                            }
+                        });
+
+                        // 控制清除按钮显示
+                        if (inputValue) {
+                            clearButton.classList.remove('hidden');
+                        } else {
+                            clearButton.classList.add('hidden');
+                        }
+                    }
+                });
+            </script>
+
 
             <div class="form-group">
                 <label>单价:</label>

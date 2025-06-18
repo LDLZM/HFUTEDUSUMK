@@ -1,4 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
+         import="com.ldl.entity.EduSupermarketUsers"
+         session="true" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -112,6 +114,17 @@
     </style>
 </head>
 <body>
+<c:if test="${not empty sessionScope.currentUser}">
+    <c:set var="currentUser" value="${sessionScope.currentUser}" />
+
+    <p>用户ID：${currentUser.id}</p>
+    <p>用户名：${currentUser.username}</p>
+</c:if>
+
+<c:if test="${empty sessionScope.currentUser}">
+    <p>未登录或会话已过期</p>
+    <a href="login.jsp">点击登录</a>
+</c:if>
 <div class="container">
     <div class="page-header">
         <h1>产品: ${demand.product.name} 的报价列表</h1>

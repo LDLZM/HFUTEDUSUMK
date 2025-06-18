@@ -139,8 +139,8 @@
 
     <form action="${pageContext.request.contextPath}/login" method="post">
         <div class="form-group">
-            <label for="username">用户名：</label>
-            <input type="text" id="username" name="username" required>
+            <label for="id">账号：</label>
+            <input type="text" id="id" name="id" required>
         </div>
         <div class="form-group">
             <label for="password">密码：</label>

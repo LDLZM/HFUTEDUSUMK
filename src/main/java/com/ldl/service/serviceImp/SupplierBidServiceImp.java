@@ -20,17 +20,17 @@ public class SupplierBidServiceImp implements SupplierBidService {
     }
 
     @Override
-    public SupplierBid getBidById(int bidId) {
+    public SupplierBid getBidById(String bidId) {
         return supplierBidMapper.getBidById(bidId);
     }
 
     @Override
-    public List<SupplierBid> getBidsByApprovedId(int approvedId) {
+    public List<SupplierBid> getBidsByApprovedId(String approvedId) {
         return supplierBidMapper.getBidsByApprovedId(approvedId);
     }
 
     @Override
-    public List<SupplierBid> getBidsBySupplierId(int supplierId) {
+    public List<SupplierBid> getBidsBySupplierId(String supplierId) {
         return supplierBidMapper.getBidsBySupplierId(supplierId);
     }
 
@@ -45,7 +45,7 @@ public class SupplierBidServiceImp implements SupplierBidService {
     }
 
     @Override
-    public void reviewBid(Integer bidId, Integer isWinning) throws Exception {
+    public void reviewBid(String bidId, Integer isWinning) throws Exception {
         // 检查需求是否存在
          SupplierBid bid = supplierBidMapper.getBidById(bidId);
         if (bid == null) {
@@ -57,8 +57,10 @@ public class SupplierBidServiceImp implements SupplierBidService {
             throw new Exception("需求已审核，不能重复操作");
         }
 
+
         // 更新需求状态和审核备注
         bid.setIsWinning(isWinning);
+        System.out.println(bid.toString());
 
         // 更新数据库
         supplierBidMapper.updateBid(bid);

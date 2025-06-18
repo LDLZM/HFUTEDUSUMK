@@ -11,11 +11,11 @@ import java.util.List;
 public interface ProductMapper {
 
     List<Product> getAllProduct();
-    Product getProductById(Integer roleId);
+    Product getProductById(String id);
     Product getProductByName(String roleName);
     void insertProduct(Product product);
     void updateProduct(Product product);
-    void deleteProduct(Integer id);
+    void deleteProduct(String id);
     List<Product> selectByKeyword(@Param("keyword") String keyword);
 
 }

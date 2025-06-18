@@ -1,9 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统登录入口</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        /* 页面容器：浅灰色背景，简洁专业 */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: rgb(244, 244, 249);
+            padding: 20px;
+        }
+
+        /* 登录卡片：纯白底色+精致阴影 */
+        .login-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* 卡片悬停：强化上浮感和阴影扩散 */
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 标题样式：黑色+粗体 */
+        .page-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ac1618;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* 副标题样式：深灰+细体，平衡视觉 */
+        .sub-title {
+            font-size: 16px;
+            font-weight: 400;
+            color: #555;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* 按钮样式：主色填充+深色阴影 */
+        .login-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: #ac1618;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(172, 22, 24, 0.3);
+        }
+
+        /* 按钮悬停：主色加深+阴影扩散 */
+        .login-btn:hover {
+            background-color: #8b1214;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(172, 22, 24, 0.4);
+        }
+
+        /* 按钮点击：还原基础状态 */
+        .login-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 4px 12px rgba(172, 22, 24, 0.3);
+        }
+
+        /* 页脚样式：优化链接展示 */
+        .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            line-height: 2.2;
+        }
+
+        .footer a {
+            color: #ac1618;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            margin: 0 8px;
+        }
+
+        .footer a:hover {
+            color: #8b1214;
+            text-decoration: underline;
+        }
+
+        .footer-span {
+            color: #ccc;
+        }
+
+        /* 友情链接标题样式：红色+半粗体 */
+        .footer-title {
+            font-weight: 600;
+            color: #ac1618; /* 改为红色（主色调） */
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+    </style>
 </head>
 <body>
-<a href="/toLogin">跳转到登录页</a></body>
+<div class="container">
+    <div class="login-card">
+        <h1 class="page-title">主页</h1> <!-- "主页"标题 -->
+        <p class="sub-title">欢迎访问合肥工业大学教育超市管理信息系统</p>
+        <a href="/toLogin" class="login-btn">进入登录页面</a>
+    </div>
+    <div class="footer">
+        <div class="footer-title">友情链接</div> <!-- "友情链接"标题 -->
+        <a href="https://www.hfut.edu.cn" target="_blank">合肥工业大学</a>
+        <span class="footer-span">|</span>
+        <a href="https://cwc.hfut.edu.cn" target="_blank">合肥工业大学财务处</a>
+        <span class="footer-span">|</span>
+        <a href="https://zb.hfut.edu.cn/cms/" target="_blank">合肥工业大学招标与采购中心</a>
+        <span class="footer-span">|</span>
+        <a href="https://zwb.hfut.edu.cn/" target="_blank">合肥工业大学总务部</a>
+    </div>
+</div>
+</body>
 </html>

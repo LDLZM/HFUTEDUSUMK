@@ -19,7 +19,7 @@ public class UsersServiceImp implements UsersService {
         return usersMapper.getAllUsers();
     }
 
-    public EduSupermarketUsers getUserById(Integer id) {
+    public EduSupermarketUsers getUserById(String id) {
         return usersMapper.getUserById(id);
     }
 
@@ -35,14 +35,14 @@ public class UsersServiceImp implements UsersService {
         usersMapper.updateUser(user);
     }
 
-    public void deleteUser(Integer id) {
+    public void deleteUser(String id) {
         usersMapper.deleteUser(id);
     }
 
 
     @Override
-    public EduSupermarketUsers loginByUsernameAndRole(String username, String password, Integer roleId) {
-        EduSupermarketUsers user = usersMapper.getUserByUsername(username);
+    public EduSupermarketUsers loginByIdAndRole(String id, String password, Integer roleId) {
+        EduSupermarketUsers user = usersMapper.getUserById(id);
         if (user != null &&
                 user.getPassword().equals(password) &&
                 user.getStatus() == 1 &&

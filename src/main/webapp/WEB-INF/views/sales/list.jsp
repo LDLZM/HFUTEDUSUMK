@@ -133,6 +133,9 @@
         <div class="action-btn-group">
             <a href="${pageContext.request.contextPath}/sales/add" class="action-btn">添加销售记录</a>
         </div>
+        <div class="action-btn-group">
+            <a href="${pageContext.request.contextPath}/sales/refund" class="action-btn">退货处理</a>
+        </div>
 
         <!-- 搜索表单 -->
         <form action="${pageContext.request.contextPath}/sales/list" method="get">
@@ -148,7 +151,7 @@
         <tr>
             <th>订单号</th>
             <th>订单日期</th>
-            <th>产品 ID</th>
+            <th>产品编号</th>
             <th>销售数量</th>
             <th>总金额</th>
             <th>支付方式</th>

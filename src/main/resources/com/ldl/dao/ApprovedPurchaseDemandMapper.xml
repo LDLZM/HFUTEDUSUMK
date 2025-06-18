@@ -41,9 +41,9 @@
 
     <insert id="insertApprovedDemand" parameterType="com.ldl.entity.ApprovedPurchaseDemand">
         INSERT INTO approved_purchase_demands
-        (demand_id, product_id, demand_quantity, demand_date, approved_at, deadline_date, status)
+        (approved_id,demand_id, product_id, demand_quantity, demand_date, approved_at, deadline_date, status)
         VALUES
-            (#{demandId}, #{productId}, #{demandQuantity}, #{demandDate}, #{approvedAt}, #{deadlineDate}, #{status})
+            (#{approved_id},#{demandId}, #{productId}, #{demandQuantity}, #{demandDate}, #{approvedAt}, #{deadlineDate}, #{status})
     </insert>
 
     <update id="updateApprovedDemand" parameterType="com.ldl.entity.ApprovedPurchaseDemand">

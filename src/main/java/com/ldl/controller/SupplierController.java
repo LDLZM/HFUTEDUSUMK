@@ -44,7 +44,7 @@ public class SupplierController {
 
     // 编辑页
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable String id, Model model) {
         Supplier supplier = supplierService.getSupplierById(id);
         model.addAttribute("supplier", supplier);
         return "supplier/edit";
@@ -59,7 +59,7 @@ public class SupplierController {
 
     // 删除
     @GetMapping("/delete/{id}")
-    public String deleteSupplier(@PathVariable Integer id) {
+    public String deleteSupplier(@PathVariable String id) {
         supplierService.deleteSupplier(id);
         return "redirect:/supplier/list";
     }

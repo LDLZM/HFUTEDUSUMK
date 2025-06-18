@@ -12,11 +12,12 @@ import java.util.List;
 @Repository
 public interface InventoryMapper {
     List<Inventory> getAllInventory();
-    Inventory getInventoryById(Integer id);
+    Inventory getInventoryById(String id);
     void insertInventory(Inventory inventory);
     void updateInventory(Inventory inventory);
-    void deleteInventory(Integer id);
+    void deleteInventory(String id);
     List<Inventory> selectByKeyword(@Param("keyword") String keyword);
-    Inventory getInventoryByPId(Integer pid);
+    List<Inventory> selectLatestInventory();
+    Inventory getInventoryByPId(String pid);
 
 }

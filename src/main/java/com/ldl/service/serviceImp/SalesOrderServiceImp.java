@@ -15,7 +15,7 @@ public class SalesOrderServiceImp implements SalesOrderService {
     @Autowired
     SalesOrderMapper salesOrderMapper;
     @Override
-    public SalesOrder selectById(Integer orderId) {
+    public SalesOrder selectById(String orderId) {
         return salesOrderMapper.selectById(orderId);
     }
 
@@ -34,12 +34,12 @@ public class SalesOrderServiceImp implements SalesOrderService {
     }
 
     @Override
-    public int delete(Integer orderId) {
+    public int delete(String orderId) {
         return salesOrderMapper.delete(orderId);
     }
 
     @Override
-    public int payOrder(Integer orderId, String paymentMethod) {
+    public int payOrder(String orderId, String paymentMethod) {
         return salesOrderMapper.payOrder(orderId,paymentMethod);
     }
 }

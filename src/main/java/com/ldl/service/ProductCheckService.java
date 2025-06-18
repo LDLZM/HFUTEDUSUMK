@@ -9,9 +9,9 @@ public interface ProductCheckService {
     List<ProductCheck> getAllProductCheck();
 
     // 根据ID查询
-    ProductCheck getProductCheckById(Integer id);
+    ProductCheck getProductCheckById(String id);
 
     //
-    void reviewProduct(Integer id, Integer isOK , String reviews) throws Exception;
+    void reviewProduct(String id, Integer isOK , String reviews) throws Exception;
 
 }

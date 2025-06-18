@@ -26,7 +26,11 @@ public class ProductController {
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             // 如果有关键词，则进行搜索
+            System.out.println("search");
+            System.out.println(keyword);
             products = productService.searchProducts(keyword);
+            System.out.println(products.toString());
+
             model.addAttribute("keyword", keyword);
         } else {
             // 没有关键词则获取所有商品
@@ -59,7 +63,7 @@ public class ProductController {
 
     // 显示编辑商品表单
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable String id, Model model) {
         // 根据ID查询商品
         Product product = productService.getProductById(id);
 
@@ -94,7 +98,7 @@ public class ProductController {
         }
     }
     @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id")Integer id){
+    public String deleteProduct(@PathVariable("id")String id){
         productService.deleteProduct(id);
         return "redirect:/products/list";
     }
@@ -112,7 +116,7 @@ public class ProductController {
     @PostMapping("/add")
     public String addProduct(@ModelAttribute Product product) {
         productService.insertProduct(product);
-        return "redirect:/product/list";
+        return "redirect:/products/list";
     }
 
 

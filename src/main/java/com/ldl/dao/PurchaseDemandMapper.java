@@ -10,10 +10,11 @@ import java.util.List;
 @Repository
 public interface PurchaseDemandMapper {
     List<PurchaseDemand> getAllDemands();
-    PurchaseDemand getDemandById(Integer id);
+    PurchaseDemand getDemandById(String id);
     void insertDemand(PurchaseDemand demand);
     void updateDemand(PurchaseDemand demand);
-    void deleteDemand(Integer id);
+    void updateStatus(PurchaseDemand demand);
+    void deleteDemand(String id);
     List<PurchaseDemand> selectByKeyword(@Param("keyword") String keyword);
     List<PurchaseDemand> getOpenDemands();
 }

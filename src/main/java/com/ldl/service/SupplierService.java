@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface SupplierService {
     List<Supplier> getAllSuppliers();
-    Supplier getSupplierById(Integer id);
+    Supplier getSupplierById(String id);
     void insertSupplier(Supplier supplier);
     void updateSupplier(Supplier supplier);
-    void deleteSupplier(Integer id);
+    void deleteSupplier(String id);
     List<Supplier> searchSuppliersByName(String keyword);
 }

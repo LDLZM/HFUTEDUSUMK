@@ -161,16 +161,11 @@
 </head>
 <body>
 <div class="container">
-    <div class="page-header">
-        <img src="../images/xh.png" alt="学校校徽" class="school-logo">
-        <h1>添加商品</h1>
-    </div>
+
 
     <div class="form-container">
         <form action="${pageContext.request.contextPath}/sales/pay" method="post">
             <input type="hidden" name="id" value="${order.orderId}">
-
-
             <div class="form-group">
                 <label for="payment_method">支付方式:</label>
                 <select id="payment_method" name="payment_method" required>

@@ -28,8 +28,8 @@
 
     <insert id="insertDemand" parameterType="com.ldl.entity.PurchaseDemand">
         INSERT INTO hfut_edusupermarket.purchase_demands
-            (product_id, demand_quantity, demand_date, is_closed)
-        VALUES (#{productId}, #{demandQuantity}, #{demandDate}, #{is_closed})
+            (demand_id, product_id, demand_quantity, demand_date, is_closed)
+        VALUES (#{demandId},#{productId}, #{demandQuantity}, #{demandDate}, #{is_closed})
     </insert>
 
     <update id="updateDemand" parameterType="com.ldl.entity.PurchaseDemand">
@@ -41,7 +41,14 @@
         WHERE demand_id = #{demandId}
     </update>
 
-    <delete id="deleteDemand" parameterType="java.lang.Integer">
+
+    <update id="updateStatus" >
+        UPDATE hfut_edusupermarket.purchase_demands
+        SET is_closed = #{is_closed}
+        WHERE demand_id = #{demandId}
+    </update>
+
+    <delete id="deleteDemand">
         DELETE FROM hfut_edusupermarket.purchase_demands
         WHERE demand_id = #{demandId}
     </delete>

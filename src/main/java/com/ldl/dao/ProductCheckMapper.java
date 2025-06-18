@@ -15,7 +15,7 @@ public interface ProductCheckMapper {
     List<ProductCheck> getAllProductCheck();
 
     // 根据ID查询
-    ProductCheck getProductCheckById(Integer id);
+    ProductCheck getProductCheckById(String id);
 
 
     void update(ProductCheck productCheck);

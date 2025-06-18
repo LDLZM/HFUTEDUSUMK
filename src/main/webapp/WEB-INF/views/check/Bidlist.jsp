@@ -120,6 +120,7 @@
     <table>
         <tr>
             <th>采购单号</th>
+            <th>报价单号</th>
             <th>供应商</th>
             <th>报价</th>
             <th>交货天数</th>
@@ -132,6 +133,7 @@
         <c:forEach items="${bids}" var="bid">
             <tr>
                 <td>${bid.approvedId}</td>
+                <td>${bid.bidId}</td>
                 <td>${bid.supplier.supplierName}</td>
                 <td>${bid.bidPrice}</td>
                 <td>${bid.deliveryDays}</td>

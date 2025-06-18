@@ -13,7 +13,7 @@ public interface ApprovedPurchaseDemandMapper {
     List<ApprovedPurchaseDemand> getAllApprovedDemands();
 
     // 根据ID查询
-    ApprovedPurchaseDemand getApprovedDemandById(int approvedId);
+    ApprovedPurchaseDemand getApprovedDemandById(String approvedId);
 
     // 根据状态查询
     List<ApprovedPurchaseDemand> getApprovedDemandsByStatus(int status);

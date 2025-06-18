@@ -28,9 +28,10 @@ public class SupplierBidController {
     }
     // 供应商报价列表
     @GetMapping("/list/{approvedId}")
-    public String listBids(@PathVariable int approvedId, Model model) {
-        System.out.printf("!!!!!");
+    public String listBids(@PathVariable String approvedId, Model model) {
+        System.out.println("#@$#");
         List<SupplierBid> bidList = supplierBidService.getBidsByApprovedId(approvedId);
+        System.out.println(bidList.toString());
         ApprovedPurchaseDemand demand = approvedPurchaseDemandService.getApprovedDemandById(approvedId);
 
         model.addAttribute("bids", bidList);
@@ -40,7 +41,7 @@ public class SupplierBidController {
 
     // 新增报价页面
     @GetMapping("/add/{approvedId}")
-    public String showAddForm(@PathVariable int approvedId, Model model) {
+    public String showAddForm(@PathVariable String approvedId, Model model) {
         ApprovedPurchaseDemand demand = approvedPurchaseDemandService.getApprovedDemandById(approvedId);
         model.addAttribute("demand", demand);
         model.addAttribute("bid", new SupplierBid());
@@ -49,8 +50,10 @@ public class SupplierBidController {
 
     // 提交报价
     @PostMapping("/add")
-    public String addBid(@ModelAttribute SupplierBid bid) {
+    public String addBid(@ModelAttribute SupplierBid bid,Model model) {
+        List<ApprovedPurchaseDemand> demandList = approvedPurchaseDemandService.getAllApprovedDemands();
+        model.addAttribute("demands", demandList);
         supplierBidService.insertBid(bid);
-        return "redirect:/supplierBid/list/" + bid.getApprovedId();
+        return "approvedDemand/list";
     }
 }

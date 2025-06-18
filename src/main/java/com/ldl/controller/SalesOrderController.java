@@ -20,7 +20,8 @@ public class SalesOrderController {
     FinancialRecordService financialRecordService;
     @Autowired
     InventoryService inventoryService;
-    // 供应商报价列表
+    @Autowired
+    ProductService productService;
     @GetMapping("/list")
     public String list(Model model) {
         System.out.printf("!!!!!!!!!!!!!!!!!!!!");
@@ -30,7 +31,7 @@ public class SalesOrderController {
     }
     // 显示编辑商品表单
     @GetMapping("/pay/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable String id, Model model) {
         // 根据ID查询商品
         SalesOrder order = salesOrderService.selectById(id);
         // 将商品信息添加到Model中
@@ -41,16 +42,14 @@ public class SalesOrderController {
 
 
     @PostMapping("/pay")
-    public String pay(@RequestParam("id") Integer id, @RequestParam("payment_method") String name, RedirectAttributes redirectAttributes) {
+    public String pay(@RequestParam("id") String id, @RequestParam("payment_method") String name, RedirectAttributes redirectAttributes) {
         System.out.println(salesOrderService.selectById(id).toString());
         System.out.println(salesOrderService.selectById(id).getProductId());
-        Integer pid = salesOrderService.selectById(id).getProductId();
+        String pid = salesOrderService.selectById(id).getProductId();
         Inventory inventory = inventoryService.getInventoryByPId(pid);
-        System.out.printf(inventory.toString());
-        System.out.printf(inventory.toString());
-        System.out.printf(inventory.getProduct().toString());
         if(inventory == null){
-            redirectAttributes.addFlashAttribute("error", "商品库存记录不存在");            System.out.printf("不存在");
+            redirectAttributes.addFlashAttribute("error", "商品库存记录不存在");
+            System.out.printf("不存在");
             return "redirect:/sales/list";
         }
         else if(inventory.getQuantity() - salesOrderService.selectById(id).getQuantity()<0){
@@ -62,23 +61,29 @@ public class SalesOrderController {
             redirectAttributes.addFlashAttribute("success", "支付成功");
             return "redirect:/sales/list";
         }
+        }
 
-    }
 
 
     @GetMapping("/delete/{id}")
-    public String deleteRole(@PathVariable("id") Integer id) {
+    public String deleteRole(@PathVariable("id") String id) {
         FinancialRecord financialRecord = financialRecordService.selectBySid(id);
+
         financialRecordService.delete(financialRecord.getRecordId());
         salesOrderService.delete(id);
         return "redirect:/sales/list";
     }
     @GetMapping("/add")
-    public String add(){
+    public String add(Model model){
+        List<Product> products = productService.getAllProduct();
+        model.addAttribute("products",products);
         return "sales/add";
     }
     @PostMapping("/add")
-    public String addSupplier(@ModelAttribute SalesOrder salesOrders) {
+    public String addSalesOrder(@ModelAttribute SalesOrder salesOrders) {
+        System.out.println("!!!!!!!!!!!!!!!!!");
+        System.out.println(salesOrders.toString());
+        System.out.println("!!!!!!!!!!!!!!!!!!!!");
         salesOrderService.insert(salesOrders);
         return "redirect:/sales/list";
     }

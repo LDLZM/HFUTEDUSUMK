@@ -144,6 +144,8 @@
     <h1>采购需求审核</h1>
     <div class="action-btn-group">
       <a href="${pageContext.request.contextPath}/inventory/check_list" class="action-btn">查看库存情况</a>
+      <a href="${pageContext.request.contextPath}/sales/list" class="action-btn">查看销售情况</a>
+
     </div>
 
     <!-- 搜索和过滤表单 -->

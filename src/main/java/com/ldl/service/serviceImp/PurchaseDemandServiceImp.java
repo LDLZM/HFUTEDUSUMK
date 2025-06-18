@@ -20,7 +20,7 @@ public class PurchaseDemandServiceImp implements PurchaseDemandService {
     }
 
     @Override
-    public PurchaseDemand getDemandById(Integer id) {
+    public PurchaseDemand getDemandById(String id) {
         return purchaseDemandMapper.getDemandById(id);
     }
 
@@ -35,7 +35,7 @@ public class PurchaseDemandServiceImp implements PurchaseDemandService {
     }
 
     @Override
-    public void deleteDemand(Integer id) {
+    public void deleteDemand(String id) {
         purchaseDemandMapper.deleteDemand(id);
     }
 
@@ -50,7 +50,7 @@ public class PurchaseDemandServiceImp implements PurchaseDemandService {
     }
 
     @Override
-    public void reviewDemand(Integer demandId, Integer isClosed) throws Exception {
+    public void reviewDemand(String demandId, Integer isClosed) throws Exception {
         // 检查需求是否存在
         PurchaseDemand demand = purchaseDemandMapper.getDemandById(demandId);
         if (demand == null) {
@@ -62,14 +62,20 @@ public class PurchaseDemandServiceImp implements PurchaseDemandService {
             throw new Exception("需求已审核，不能重复操作");
         }
 
+        System.out.println(demand.toString());
         // 更新需求状态和审核备注
         demand.setIs_closed(isClosed);
-
-        // 更新数据库
+        System.out.println(demand.toString());
         purchaseDemandMapper.updateDemand(demand);
+        // 更新数据库
+        System.out.println();
 
     }
 
+    @Override
+    public void updateStatus(PurchaseDemand demand) {
+        purchaseDemandMapper.updateStatus(demand);
+    }
 
 
 }

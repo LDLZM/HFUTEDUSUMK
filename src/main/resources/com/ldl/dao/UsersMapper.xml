@@ -4,7 +4,7 @@
 <mapper namespace="com.ldl.dao.UsersMapper">
 
     <resultMap id="userResultMap" type="com.ldl.entity.EduSupermarketUsers">
-        <id property="id" column="id"/>
+        <id property="id" column="id" jdbcType="VARCHAR" javaType="String"/>
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="status" column="status"/>
@@ -45,8 +45,8 @@
 
     <insert id="insertUser" parameterType="com.ldl.entity.EduSupermarketUsers">
         INSERT INTO edu_supermarket_users
-            (username, password, role_id, status)
-        VALUES (#{username}, #{password}, #{role.roleId}, #{status})
+            (id,username, password, role_id, status)
+        VALUES (#{id},#{username}, #{password}, #{role.roleId}, #{status})
     </insert>
 
     <update id="updateUser" parameterType="com.ldl.entity.EduSupermarketUsers">
@@ -58,7 +58,7 @@
         WHERE id = #{id}
     </update>
 
-    <delete id="deleteUser" parameterType="java.lang.Integer">
+    <delete id="deleteUser" parameterType="java.lang.String">
         DELETE FROM edu_supermarket_users WHERE id = #{id}
     </delete>
 </mapper>

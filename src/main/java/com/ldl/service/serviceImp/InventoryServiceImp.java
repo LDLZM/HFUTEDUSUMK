@@ -18,12 +18,12 @@ public class InventoryServiceImp implements InventoryService {
     }
 
     @Override
-    public Inventory getInventoryById(Integer id) {
+    public Inventory getInventoryById(String id) {
         return inventoryMapper.getInventoryById(id);
     }
 
     @Override
-    public Inventory getInventoryByPId(Integer pid) {
+    public Inventory getInventoryByPId(String pid) {
         return  inventoryMapper.getInventoryByPId(pid);
     }
 
@@ -38,7 +38,7 @@ public class InventoryServiceImp implements InventoryService {
     }
 
     @Override
-    public void deleteInventory(Integer id) {
+    public void deleteInventory(String id) {
         inventoryMapper.deleteInventory(id);
 
     }
@@ -46,4 +46,9 @@ public class InventoryServiceImp implements InventoryService {
     @Override
     public List<Inventory> selectByKeyword(String keyword) {
         return inventoryMapper.selectByKeyword("%" + keyword + "%");    }
+
+    @Override
+    public List<Inventory> selectLatestInventory() {
+        return inventoryMapper.selectLatestInventory();
+    }
 }

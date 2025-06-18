@@ -50,10 +50,15 @@ public class PurchaseDemandController {
 
     @PostMapping("/add")
     public String addDemand(@ModelAttribute PurchaseDemand demand,
-                            @RequestParam("productId") int productId) {
+                            @RequestParam("productId") String productId) {
+        System.out.println(demand.toString());
+        System.out.println(productId);
+        System.out.println("!!!!!!!!!!!!!!!");
         try {
             Product product = productService.getProductById(productId);
+            System.out.println(product.toString());
             demand.setProduct(product);
+            System.out.println(demand.toString());
             purchaseDemandService.insertDemand(demand);
             return "redirect:/demand/list";
         } catch (Exception e) {
@@ -63,7 +68,7 @@ public class PurchaseDemandController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable Integer id, Model model) {
+    public String showEditForm(@PathVariable String id, Model model) {
         PurchaseDemand demand = purchaseDemandService.getDemandById(id);
         model.addAttribute("demand", demand);
         return "demand/edit";
@@ -71,7 +76,7 @@ public class PurchaseDemandController {
 
     @PostMapping("/edit")
     public String processEditForm(@ModelAttribute PurchaseDemand demand,
-                                  @RequestParam("productId") int productId) {
+                                  @RequestParam("productId") String productId) {
         try {
             Product product = productService.getProductById(productId);
             demand.setProduct(product);
@@ -84,7 +89,7 @@ public class PurchaseDemandController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteDemand(@PathVariable("id") Integer id) {
+    public String deleteDemand(@PathVariable("id") String id) {
         purchaseDemandService.deleteDemand(id);
         return "redirect:/demand/list";
     }

@@ -33,10 +33,10 @@
     <!-- 插入新财务记录 -->
     <insert id="insert" parameterType="com.ldl.entity.FinancialRecord" useGeneratedKeys="true" keyProperty="recordId">
         INSERT INTO financial_records (
-            order_id, bid_id, transaction_type, amount, transaction_date,
+            record_id,order_id, bid_id, transaction_type, amount, transaction_date,
             payment_method, description, status
         ) VALUES (
-                     #{orderId}, #{bidId}, #{transactionType}, #{amount}, #{transactionDate},
+                    #{recordId}, #{orderId}, #{bidId}, #{transactionType}, #{amount}, #{transactionDate},
                      #{paymentMethod}, #{description}, #{status}
                  )
     </insert>
@@ -57,11 +57,11 @@
     </update>
 
     <!-- 删除财务记录 -->
-    <delete id="delete" parameterType="java.lang.Integer">
+    <delete id="delete">
         DELETE FROM financial_records WHERE record_id = #{recordId}
     </delete>
 
-    <select id="selectBySid" parameterType="integer" resultMap="BaseResultMap">
+    <select id="selectBySid"  resultMap="BaseResultMap">
         SELECT * from financial_records where order_id = #{orderId}
     </select>
 

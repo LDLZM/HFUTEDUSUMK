@@ -22,8 +22,8 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public Product getProductById(Integer roleId) {
-        return productMapper.getProductById(roleId);
+    public Product getProductById(String id) {
+        return productMapper.getProductById(id);
     }
 
     @Override
@@ -42,13 +42,14 @@ public class ProductServiceImp implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Integer id) {
+    public void deleteProduct(String id) {
         productMapper.deleteProduct(id);
     }
 
     @Override
     public List<Product> searchProducts(String keyword) {
 
+        System.out.println("!!!!"+keyword);
         return productMapper.selectByKeyword(keyword);
     }
 }

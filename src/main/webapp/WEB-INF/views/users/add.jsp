@@ -162,6 +162,10 @@
     <div class="form-container">
         <form action="${pageContext.request.contextPath}/users/add" method="post">
             <div class="form-group">
+                <label>用户编码:</label>
+                <input type="text" name="id" required>
+            </div>
+            <div class="form-group">
                 <label>用户名:</label>
                 <input type="text" name="username" required>
             </div>

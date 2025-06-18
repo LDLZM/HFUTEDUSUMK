@@ -6,12 +6,13 @@ import java.util.List;
 
 public interface PurchaseDemandService {
     List<PurchaseDemand> getAllDemands();
-    PurchaseDemand getDemandById(Integer id);
+    PurchaseDemand getDemandById(String id);
     void insertDemand(PurchaseDemand demand);
     void updateDemand(PurchaseDemand demand);
-    void deleteDemand(Integer id);
+    void deleteDemand(String id);
     List<PurchaseDemand> selectByKeyword(String keyword);
     List<PurchaseDemand> getOpenDemands();
-    void reviewDemand(Integer demandId, Integer isClosed) throws Exception;
+    void reviewDemand(String demandId, Integer isClosed) throws Exception;
+    void updateStatus(PurchaseDemand demand);
 
 }

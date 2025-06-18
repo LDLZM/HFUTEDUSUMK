@@ -3,9 +3,9 @@ package com.ldl.entity;
 import java.sql.Timestamp;
 
 public class SupplierBid {
-    private int bidId;
-    private int approvedId;
-    private int supplierId;
+    private String bidId;
+    private String approvedId;
+    private String supplierId;
     private double bidPrice;
     private int deliveryDays;
     private Timestamp bidTime;
@@ -16,11 +16,27 @@ public class SupplierBid {
     private ApprovedPurchaseDemand demand;
     private Supplier supplier;
 
+    @Override
+    public String toString() {
+        return "SupplierBid{" +
+                "bidId='" + bidId + '\'' +
+                ", approvedId='" + approvedId + '\'' +
+                ", supplierId='" + supplierId + '\'' +
+                ", bidPrice=" + bidPrice +
+                ", deliveryDays=" + deliveryDays +
+                ", bidTime=" + bidTime +
+                ", isWinning=" + isWinning +
+                ", bidRemarks='" + bidRemarks + '\'' +
+                ", demand=" + demand +
+                ", supplier=" + supplier +
+                '}';
+    }
+
     // 无参构造
     public SupplierBid() {}
 
     // 有参构造
-    public SupplierBid(int bidId, int approvedId, int supplierId, double bidPrice
+    public SupplierBid(String bidId, String approvedId, String supplierId, double bidPrice
                         , int deliveryDays, Timestamp bidTime,
                        int isWinning, String bidRemarks) {
         this.bidId = bidId;
@@ -34,27 +50,27 @@ public class SupplierBid {
     }
 
     // Getter和Setter方法
-    public int getBidId() {
+    public String getBidId() {
         return bidId;
     }
 
-    public void setBidId(int bidId) {
+    public void setBidId(String bidId) {
         this.bidId = bidId;
     }
 
-    public int getApprovedId() {
+    public String getApprovedId() {
         return approvedId;
     }
 
-    public void setApprovedId(int approvedId) {
+    public void setApprovedId(String approvedId) {
         this.approvedId = approvedId;
     }
 
-    public int getSupplierId() {
+    public String  getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 
@@ -116,17 +132,4 @@ public class SupplierBid {
         this.supplier = supplier;
     }
 
-    @Override
-    public String toString() {
-        return "SupplierBid{" +
-                "bidId=" + bidId +
-                ", approvedId=" + approvedId +
-                ", supplierId=" + supplierId +
-                ", bidPrice=" + bidPrice +
-                ", deliveryDays=" + deliveryDays +
-                ", bidTime=" + bidTime +
-                ", isWinning=" + isWinning +
-                ", bidRemarks='" + bidRemarks + '\'' +
-                '}';
-    }
 }

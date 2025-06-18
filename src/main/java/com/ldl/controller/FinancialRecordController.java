@@ -31,7 +31,7 @@ public class FinancialRecordController {
 
     // 删除财务记录
     @GetMapping("/delete/{id}")
-    public String deleteRecord(@PathVariable("id") Integer recordId) {
+    public String deleteRecord(@PathVariable("id") String recordId) {
         financialRecordService.delete(recordId);
         return "redirect:/finance/list";
     }

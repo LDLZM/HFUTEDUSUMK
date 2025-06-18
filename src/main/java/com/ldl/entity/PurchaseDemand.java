@@ -3,17 +3,29 @@ package com.ldl.entity;
 import java.sql.Timestamp;
 
 public class PurchaseDemand {
-    private int demandId;
-    private int productId;
+    private String demandId;
+    private String productId;
     private int demandQuantity;
     private Timestamp demandDate;
     private Integer is_closed = 0; // 默认值设为 0（未审核）
     private Product product;
 
+    @Override
+    public String toString() {
+        return "PurchaseDemand{" +
+                "demandId=" + demandId +
+                ", productId=" + productId +
+                ", demandQuantity=" + demandQuantity +
+                ", demandDate=" + demandDate +
+                ", is_closed=" + is_closed +
+                ", product=" + product +
+                '}';
+    }
+
     public PurchaseDemand(){
 
     }
-    public PurchaseDemand(int demandId, int productId, int demandQuantity, Timestamp demandDate, int is_closed, Product product) {
+    public PurchaseDemand(String demandId, String productId, int demandQuantity, Timestamp demandDate, int is_closed, Product product) {
         this.demandId = demandId;
         this.productId = productId;
         this.demandQuantity = demandQuantity;
@@ -22,19 +34,19 @@ public class PurchaseDemand {
         this.product = product;
     }
 
-    public int getDemandId() {
+    public String getDemandId() {
         return demandId;
     }
 
-    public void setDemandId(int demandId) {
+    public void setDemandId(String demandId) {
         this.demandId = demandId;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

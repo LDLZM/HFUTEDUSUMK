@@ -153,7 +153,7 @@
                 <td>${product.unitPrice}</td>
                 <td class="action">
                     <a href="${pageContext.request.contextPath}/products/edit/${product.id}" class="action-link">编辑</a>
-                    <a href="${pageContext.request.contextPath}/products/delete/${product.id}" class="action-link">删除</a>
+                    <a href="${pageContext.request.contextPath}/products/delete/${product.id}" class="action-link">下架</a>
                 </td>
             </tr>
         </c:forEach>

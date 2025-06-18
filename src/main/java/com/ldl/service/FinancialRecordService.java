@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface FinancialRecordService {
     // 根据ID查询财务记录
-    FinancialRecord selectById(Integer recordId);
+    FinancialRecord selectById(String recordId);
 
     // 查询所有财务记录
     List<FinancialRecord> selectAll();
 
     // 按销售订单号查询
-    FinancialRecord selectBySid(Integer sid);
+    FinancialRecord selectBySid(String sid);
     // 插入新财务记录
     int insert(FinancialRecord record);
 
@@ -23,7 +23,7 @@ public interface FinancialRecordService {
     int update(FinancialRecord record);
 
     // 删除财务记录
-    int delete(Integer recordId);
+    int delete(String recordId);
 
 
 }

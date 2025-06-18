@@ -19,7 +19,7 @@ public class SupplierServiceImp implements SupplierService {
     }
 
     @Override
-    public Supplier getSupplierById(Integer id) {
+    public Supplier getSupplierById(String id) {
         return supplierMapper.getSupplierById(id);
     }
 
@@ -34,7 +34,7 @@ public class SupplierServiceImp implements SupplierService {
     }
 
     @Override
-    public void deleteSupplier(Integer id) {
+    public void deleteSupplier(String id) {
         supplierMapper.deleteSupplier(id);
     }
 

@@ -7,10 +7,11 @@ import java.util.List;
 
 public interface InventoryService {
     List<Inventory> getAllInventory();
-    Inventory getInventoryById(Integer id);
-    Inventory getInventoryByPId(Integer pid);
+    Inventory getInventoryById(String id);
+    Inventory getInventoryByPId(String pid);
     void insertInventory(Inventory inventory);
     void updateInventory(Inventory inventory);
-    void deleteInventory(Integer id);
+    void deleteInventory(String id);
     List<Inventory> selectByKeyword(@Param("keyword") String keyword);
+    List<Inventory> selectLatestInventory();
 }

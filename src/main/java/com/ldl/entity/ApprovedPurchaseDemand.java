@@ -1,17 +1,18 @@
 package com.ldl.entity;
 
 import java.sql.Timestamp;
+import java.util.Stack;
 
 public class ApprovedPurchaseDemand {
-    private int approvedId;
-    private int demandId;
-    private int productId;
+    private String approvedId;
+    private String demandId;
+    private String productId;
     private int demandQuantity;
     private Timestamp demandDate;
     private Timestamp approvedAt;
     private Timestamp deadlineDate;
     private int status; // 0-开放报价，1-关闭报价
-    private Integer winningSupplierId;
+    private String winningSupplierId;
     private Double winningPrice;
     private Timestamp createdAt;
     private Timestamp updatedAt;
@@ -21,7 +22,7 @@ public class ApprovedPurchaseDemand {
     private Product product;
     private Supplier winningSupplier;
 
-    public ApprovedPurchaseDemand(int approvedId, int demandId, int productId, int demandQuantity, Timestamp demandDate, Timestamp approvedAt, Timestamp deadlineDate, int status, Integer winningSupplierId, Double winningPrice, Timestamp createdAt, Timestamp updatedAt, int isOK, Product product, Supplier winningSupplier) {
+    public ApprovedPurchaseDemand(String approvedId, String demandId, String productId, int demandQuantity, Timestamp demandDate, Timestamp approvedAt, Timestamp deadlineDate, int status, String winningSupplierId, Double winningPrice, Timestamp createdAt, Timestamp updatedAt, int isOK, Product product, Supplier winningSupplier) {
         this.approvedId = approvedId;
         this.demandId = demandId;
         this.productId = productId;
@@ -47,27 +48,27 @@ public class ApprovedPurchaseDemand {
     public void setIsOK(int isOK) {
         this.isOK = isOK;
     }
-    public int getApprovedId() {
+    public String getApprovedId() {
         return approvedId;
     }
 
-    public void setApprovedId(int approvedId) {
+    public void setApprovedId(String approvedId) {
         this.approvedId = approvedId;
     }
 
-    public int getDemandId() {
+    public String getDemandId() {
         return demandId;
     }
 
-    public void setDemandId(int demandId) {
+    public void setDemandId(String demandId) {
         this.demandId = demandId;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 
@@ -111,11 +112,11 @@ public class ApprovedPurchaseDemand {
         this.status = status;
     }
 
-    public Integer getWinningSupplierId() {
+    public String getWinningSupplierId() {
         return winningSupplierId;
     }
 
-    public void setWinningSupplierId(Integer winningSupplierId) {
+    public void setWinningSupplierId(String winningSupplierId) {
         this.winningSupplierId = winningSupplierId;
     }
 

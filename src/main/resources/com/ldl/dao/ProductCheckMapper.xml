@@ -4,10 +4,10 @@
 
     <resultMap id="ProductCheckResultMap" type="com.ldl.entity.ProductCheck">
         <id property="id" column="id"/>
-        <id property="approvedId" column="order_id"/>
+        <id property="approvedId" column="approved_id"/>
         <id property="isOK" column="is_ok"/>
         <!-- 关联产品 -->
-        <association property="approvedPurchaseDemand" column="order_id"
+        <association property="approvedPurchaseDemand" column="approved_id"
                      javaType="com.ldl.entity.ApprovedPurchaseDemand"
                      select="com.ldl.dao.ApprovedPurchaseDemandMapper.getApprovedDemandById"/>
     </resultMap>

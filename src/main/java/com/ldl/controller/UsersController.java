@@ -52,7 +52,7 @@ public class UsersController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model) {
+    public String showEditForm(@PathVariable("id") String id, Model model) {
         EduSupermarketUsers user = usersService.getUserById(id);
         List<EduSupermarketRoles> roles = rolesService.getAllRoles();
         model.addAttribute("user", user);
@@ -67,7 +67,7 @@ public class UsersController {
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id) {
+    public String deleteUser(@PathVariable("id") String id) {
         usersService.deleteUser(id);
         return "redirect:/users/list";
     }

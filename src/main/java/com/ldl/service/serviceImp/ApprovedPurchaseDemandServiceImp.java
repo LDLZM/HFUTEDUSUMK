@@ -19,7 +19,7 @@ public class ApprovedPurchaseDemandServiceImp implements ApprovedPurchaseDemandS
     }
 
     @Override
-    public ApprovedPurchaseDemand getApprovedDemandById(int approvedId) {
+    public ApprovedPurchaseDemand getApprovedDemandById(String approvedId) {
         return approvedPurchaseDemandMapper.getApprovedDemandById(approvedId);
     }
 

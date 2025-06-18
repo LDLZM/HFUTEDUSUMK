@@ -33,10 +33,11 @@
         FROM hfut_edusupermarket.products
         WHERE products.product_name LIKE #{keyword} OR products.category LIKE #{keyword}
     </select>
+
     <insert id="insertProduct" parameterType="com.ldl.entity.Product">
         INSERT INTO hfut_edusupermarket.products
-            (hfut_edusupermarket.products.product_name, hfut_edusupermarket.products.category, hfut_edusupermarket.products.unit_price)
-        VALUES (#{name}, #{category}, #{unitPrice})
+            (hfut_edusupermarket.products.product_id,hfut_edusupermarket.products.product_name, hfut_edusupermarket.products.category, hfut_edusupermarket.products.unit_price)
+        VALUES (#{id}, #{name}, #{category}, #{unitPrice})
     </insert>
 
     <update id="updateProduct" parameterType="com.ldl.entity.Product">
@@ -47,7 +48,7 @@
         WHERE hfut_edusupermarket.products.product_id = #{id}
     </update>
 
-    <delete id="deleteProduct" parameterType="java.lang.Integer">
+    <delete id="deleteProduct" >
         DELETE FROM hfut_edusupermarket.products WHERE hfut_edusupermarket.products.product_id = #{id}
     </delete>
 </mapper>

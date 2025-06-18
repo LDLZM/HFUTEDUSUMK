@@ -18,6 +18,7 @@ public class ApprovedPurchaseDemandController {
     // 列表页
     @GetMapping("/list")
     public String listApprovedDemands(Model model) {
+        System.out.println("111");
         List<ApprovedPurchaseDemand> demandList = approvedPurchaseDemandService.getAllApprovedDemands();
         model.addAttribute("demands", demandList);
         return "approvedDemand/list";
@@ -25,7 +26,7 @@ public class ApprovedPurchaseDemandController {
 
     // 查看详情
     @GetMapping("/detail/{id}")
-    public String viewDetail(@PathVariable int id, Model model) {
+    public String viewDetail(@PathVariable String id, Model model) {
         ApprovedPurchaseDemand demand = approvedPurchaseDemandService.getApprovedDemandById(id);
         model.addAttribute("demand", demand);
         return "approvedDemand/detail";

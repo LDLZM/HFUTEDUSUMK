@@ -12,11 +12,11 @@ import java.util.Map;
 @Repository
 public interface UsersMapper {
     List<EduSupermarketUsers> getAllUsers();
-    EduSupermarketUsers getUserById(Integer id);
+    EduSupermarketUsers getUserById(String id);
     EduSupermarketUsers getUserByUsername(String username);
     void insertUser(EduSupermarketUsers user);
     void updateUser(EduSupermarketUsers user);
-    void deleteUser(Integer id);
+    void deleteUser(String id);
     List<EduSupermarketUsers> selectByKeyword(@Param("keyword") String keyword);
 
 }

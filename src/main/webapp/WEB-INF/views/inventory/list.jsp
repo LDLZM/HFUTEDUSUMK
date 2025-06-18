@@ -123,14 +123,10 @@
     <div class="page-header">
         <img src="../images/xh.png" alt="学校校徽" class="school-logo">
         <h1>库存管理</h1>
-        <div class="action-btn-group">
-            <a href="${pageContext.request.contextPath}/inventory/add" class="action-btn">添加商品</a>
-        </div>
-
         <!-- 搜索表单 -->
         <form action="${pageContext.request.contextPath}/inventory/list" method="get">
             <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-                <input type="text" name="keyword" placeholder="搜索商品"
+                <input type="text" name="keyword" placeholder="搜索库存记录"
                        value="${param.keyword}" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 4px;">
                 <button type="submit" class="action-btn" style="background-color: #ac1618; padding: 8px 20px;">搜索</button>
             </div>
@@ -140,17 +136,22 @@
     <table>
         <tr>
             <th>库存ID</th>
+            <th>商品编号</th>
             <th>商品名</th>
             <th>库存数量</th>
             <th>更新时间</th>
+            <th>事件</th>
             <th class="action">操作</th>
         </tr>
         <c:forEach items="${inventory}" var="inv">
             <tr>
                 <td>${inv.inventoryId}</td>
+                <td>${inv.product.id}</td>
                 <td>${inv.product.name}</td>
                 <td>${inv.quantity}</td>
                 <td>${inv.lastUpdated}</td>
+                <td>${inv.event}</td>
+
                 <td class="action">
                     <a href="${pageContext.request.contextPath}/inventory/edit/${inv.inventoryId}" class="action-link">编辑</a>
                     <a href="${pageContext.request.contextPath}/inventory/delete/${inv.inventoryId}" class="action-link">删除</a>

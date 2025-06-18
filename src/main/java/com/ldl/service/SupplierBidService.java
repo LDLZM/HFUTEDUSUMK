@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface SupplierBidService {
     List<SupplierBid> getAllBids();
-    SupplierBid getBidById(int bidId);
-    List<SupplierBid> getBidsByApprovedId(int approvedId);
-    List<SupplierBid> getBidsBySupplierId(int supplierId);
+    SupplierBid getBidById(String bidId);
+    List<SupplierBid> getBidsByApprovedId(String approvedId);
+    List<SupplierBid> getBidsBySupplierId(String supplierId);
     void insertBid(SupplierBid bid);
     void updateBidStatus(SupplierBid bid);
-    void reviewBid(Integer bidId, Integer isWinning) throws Exception;
+    void reviewBid(String bidId, Integer isWinning) throws Exception;
 
 }

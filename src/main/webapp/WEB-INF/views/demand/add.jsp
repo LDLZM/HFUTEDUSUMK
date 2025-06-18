@@ -122,6 +122,13 @@
 
     <div class="form-container">
         <form action="${pageContext.request.contextPath}/demand/add" method="post">
+
+            <div class="form-group">
+                <label>需求编号:</label>
+                <input type="text" name="demandId" required>
+            </div>
+
+
             <div class="form-group">
                 <label>商品编号:</label>
                 <select name="productId" required>

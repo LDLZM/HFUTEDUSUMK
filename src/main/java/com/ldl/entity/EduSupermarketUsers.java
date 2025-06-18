@@ -4,18 +4,29 @@ package com.ldl.entity;
 
 
 public class EduSupermarketUsers{
-    private Integer id;
+    private String id;
     private String username;
     private String password;
     private EduSupermarketRoles role;
     private Integer status;
 
+    @Override
+    public String toString() {
+        return "EduSupermarketUsers{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                '}';
+    }
+
     // Getters and Setters
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

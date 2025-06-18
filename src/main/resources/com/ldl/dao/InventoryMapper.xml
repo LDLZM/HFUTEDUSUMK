@@ -29,13 +29,15 @@
         select *
         from hfut_edusupermarket.inventory
         where inventory.product_id =#{productId}
+        order by last_updated desc
+        limit 1
     </select>
 
 
     <insert id="insertInventory" parameterType="com.ldl.entity.Inventory">
         INSERT INTO hfut_edusupermarket.inventory
-            (hfut_edusupermarket.inventory.product_id, hfut_edusupermarket.inventory.quantity, hfut_edusupermarket.inventory.last_updated)
-        VALUES (#{productId}, #{quantity}, #{lastUpdated})
+            (hfut_edusupermarket.inventory.inventory_id,hfut_edusupermarket.inventory.product_id, hfut_edusupermarket.inventory.quantity, hfut_edusupermarket.inventory.last_updated)
+        VALUES (#{inventoryId},#{productId}, #{quantity}, #{lastUpdated})
     </insert>
 
     <update id="updateInventory" parameterType="com.ldl.entity.Inventory">
@@ -46,7 +48,7 @@
         WHERE hfut_edusupermarket.inventory.inventory_id = #{inventoryId}
     </update>
 
-    <delete id="deleteInventory" parameterType="java.lang.Integer">
+    <delete id="deleteInventory" >
         DELETE FROM hfut_edusupermarket.inventory WHERE hfut_edusupermarket.inventory.inventory_id = #{inventoryId}
     </delete>
 
@@ -55,5 +57,26 @@
         SELECT *
         FROM hfut_edusupermarket.products left outer join inventory  on products.product_id = inventory.product_id
         WHERE products.product_name LIKE #{keyword}
+    </select>
+
+    <select id="selectLatestInventory" resultMap="inventoryResultMap">
+        SELECT
+            inventory_id,
+            product_id,
+            quantity,
+            last_updated,
+            event
+        FROM (
+                 SELECT
+                     inventory_id,
+                     product_id,
+                     quantity,
+                     last_updated,
+                     event,
+                     -- 按 product_id 分组，组内按 last_updated 降序排序，给每条记录标序号
+                     ROW_NUMBER() OVER (PARTITION BY product_id ORDER BY last_updated DESC) AS rn
+                 FROM inventory  -- 替换成实际的表名
+             ) AS sub_query
+        WHERE rn = 1;
     </select>
 </mapper>

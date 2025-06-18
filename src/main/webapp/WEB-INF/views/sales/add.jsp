@@ -169,13 +169,52 @@
     <div class="form-container">
         <form action="${pageContext.request.contextPath}/sales/add" method="post">
             <div class="form-group">
-                <label>日期</label>
-                <input type="text" name="orderDate" required>
+                <label>销售号</label>
+                <input type="text" name="orderId" required>
+            </div>
+<%--            <div class="form-group">--%>
+<%--                <label>日期</label>--%>
+<%--                <input type="text" name="orderDate" required>--%>
+<%--            </div>--%>
+
+<%--            <div class="form-group">--%>
+<%--                <label>商品编号:</label>--%>
+<%--                <select name="productId" required>--%>
+<%--                    <option value="">请选择商品</option>--%>
+<%--                    <c:forEach items="${products}" var="product">--%>
+<%--                        <option value="${product.id}">${product.id} - ${product.name}</option>--%>
+<%--                    </c:forEach>--%>
+<%--                </select>--%>
+<%--            </div>--%>
+<%--            <div class="form-group">--%>
+<%--                <label>商品ID</label>--%>
+<%--                <input type="text" name="productId" required>--%>
+<%--            </div>--%>
+            <div class="form-group">
+                <label>商品选择:</label>
+                <select name="productId" id="productSelect" required>
+                    <option value="">请选择商品</option>
+                    <c:forEach items="${products}" var="product">
+                        <option value="${product.id}" data-code="${product.id}" data-name="${product.name}">${product.name}</option>
+                    </c:forEach>
+                </select>
             </div>
             <div class="form-group">
-                <label>产品ID</label>
-                <input type="text" name="productId" required>
+                <label>商品编号:</label>
+                <input type="text" id="productCode" readonly>
             </div>
+            <div class="form-group">
+                <label>商品名称:</label>
+                <input type="text" id="productName" readonly>
+            </div>
+            <script>
+                // 监听商品选择变化
+                document.getElementById('productSelect').addEventListener('change', function() {
+                    var selectedOption = this.options[this.selectedIndex];
+                    document.getElementById('productCode').value = selectedOption.getAttribute('data-code');
+                    document.getElementById('productName').value = selectedOption.getAttribute('data-name');
+                });
+            </script>
             <div class="form-group">
                 <label>销售数量</label>
                 <input type="text" name="quantity" required>

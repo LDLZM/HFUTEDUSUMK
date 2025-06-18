@@ -16,7 +16,6 @@
         <association property="demand" column="approved_id"
                      javaType="com.ldl.entity.ApprovedPurchaseDemand"
                      select="com.ldl.dao.ApprovedPurchaseDemandMapper.getApprovedDemandById"/>
-
         <!-- 关联供应商 -->
         <association property="supplier" column="supplier_id"
                      javaType="com.ldl.entity.Supplier"
@@ -41,9 +40,9 @@
 
     <insert id="insertBid" parameterType="com.ldl.entity.SupplierBid">
         INSERT INTO supplier_bids
-        (approved_id, supplier_id, bid_price, delivery_days, bid_remarks)
+        (bid_id,approved_id, supplier_id, bid_price, delivery_days, bid_remarks)
         VALUES
-            (#{approvedId}, #{supplierId}, #{bidPrice}, #{deliveryDays}, #{bidRemarks})
+            (#{bidId},#{approvedId}, #{supplierId}, #{bidPrice}, #{deliveryDays}, #{bidRemarks})
     </insert>
 
     <update id="updateBidStatus" parameterType="com.ldl.entity.SupplierBid">

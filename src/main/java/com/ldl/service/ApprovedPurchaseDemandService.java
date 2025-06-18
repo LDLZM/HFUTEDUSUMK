@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ApprovedPurchaseDemandService {
     List<ApprovedPurchaseDemand> getAllApprovedDemands();
-    ApprovedPurchaseDemand getApprovedDemandById(int approvedId);
+    ApprovedPurchaseDemand getApprovedDemandById(String approvedId);
     List<ApprovedPurchaseDemand> getApprovedDemandsByStatus(int status);
     void insertApprovedDemand(ApprovedPurchaseDemand demand);
     void updateApprovedDemand(ApprovedPurchaseDemand demand);

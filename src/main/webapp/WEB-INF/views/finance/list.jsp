@@ -127,7 +127,7 @@
         <!-- 搜索表单 -->
         <form action="${pageContext.request.contextPath}/finance/list" method="get">
             <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
-                <input type="text" name="keyword" placeholder="搜索商品"
+                <input type="text" name="keyword" placeholder="搜索"
                        value="${param.keyword}" style="padding: 8px 15px; border: 1px solid #ddd; border-radius: 4px;">
                 <button type="submit" class="action-btn" style="background-color: #ac1618; padding: 8px 20px;">搜索</button>
             </div>

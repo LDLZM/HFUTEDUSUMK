@@ -1,8 +1,8 @@
 package com.ldl.entity;
 
 public class ProductCheck {
-    private Integer id;
-    private Integer approvedId;
+    private String id;
+    private String approvedId;
     private Integer isOK;
     private ApprovedPurchaseDemand approvedPurchaseDemand;
     private String remarks;
@@ -16,7 +16,7 @@ public class ProductCheck {
                 ", remarks='" + remarks + '\'' +
                 '}';
     }
-    public ProductCheck(Integer id, Integer approvedId, Integer isOK, ApprovedPurchaseDemand approvedPurchaseDemand, String remarks) {
+    public ProductCheck(String id, String approvedId, Integer isOK, ApprovedPurchaseDemand approvedPurchaseDemand, String remarks) {
         this.id = id;
         this.approvedId = approvedId;
         this.isOK = isOK;
@@ -37,19 +37,19 @@ public class ProductCheck {
         this.remarks = remarks;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getApprovedId() {
+    public String getApprovedId() {
         return approvedId;
     }
 
-    public void setApprovedId(Integer approvedId) {
+    public void setApprovedId(String approvedId) {
         this.approvedId = approvedId;
     }
 

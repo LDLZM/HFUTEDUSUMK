@@ -10,7 +10,7 @@ import java.util.Map;
 @Mapper
 public interface FinancialRecordMapper {
     // 根据ID查询财务记录
-    FinancialRecord selectById(Integer recordId);
+    FinancialRecord selectById(String recordId);
 
     // 查询所有财务记录
     List<FinancialRecord> selectAll();
@@ -22,8 +22,8 @@ public interface FinancialRecordMapper {
     int update(FinancialRecord record);
 
     // 删除财务记录
-    int delete(Integer recordId);
+    int delete(String recordId);
 
-    FinancialRecord selectBySid(Integer sid);
+    FinancialRecord selectBySid(String sid);
 
 }

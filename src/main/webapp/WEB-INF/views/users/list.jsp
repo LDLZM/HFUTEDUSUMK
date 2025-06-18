@@ -131,7 +131,7 @@
 </div>
     <table>
         <tr>
-            <th>用户ID</th>
+            <th>用户编码</th>
             <th>用户名</th>
             <th>角色</th>
             <th>状态</th>

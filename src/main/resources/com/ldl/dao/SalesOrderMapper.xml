@@ -14,8 +14,6 @@
         <result column="payment_method" property="paymentMethod" />
         <result column="payment_status" property="paymentStatus" />
         <result column="remarks" property="remarks"/>
-        <result column="created_at" property="createdAt" />
-        <result column="updated_at" property="updatedAt" />
     </resultMap>
 
     <!-- 根据ID查询订单 -->
@@ -32,11 +30,11 @@
     <!-- 插入新订单 -->
     <insert id="insert" parameterType="com.ldl.entity.SalesOrder" useGeneratedKeys="true" keyProperty="orderId">
         INSERT INTO sales_orders (
-             order_date, product_id, quantity,
-            total_amount, payment_method, payment_status, remarks
+            order_id, product_id, quantity,
+            payment_method, payment_status, remarks
         ) VALUES (
-                     #{orderDate}, #{productId}, #{quantity},
-                     #{totalAmount}, #{paymentMethod}, #{paymentStatus}, #{remarks}
+                     #{orderId}, #{productId}, #{quantity},
+                      #{paymentMethod}, #{paymentStatus}, #{remarks}
                  )
     </insert>
 
@@ -55,7 +53,7 @@
     </update>
 
     <!-- 删除订单 -->
-    <delete id="delete" parameterType="java.lang.Integer">
+    <delete id="delete">
         DELETE FROM sales_orders WHERE order_id = #{orderId}
     </delete>
 
@@ -63,8 +61,7 @@
         UPDATE sales_orders
         SET
             payment_status = 1,
-            payment_method = #{paymentMethod},
-            updated_at = NOW()
+            payment_method = #{paymentMethod}
         WHERE order_id = #{orderId}
     </update>
 </mapper>

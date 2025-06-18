@@ -2,27 +2,36 @@ package com.ldl.entity;
 
 public class Product {
 
-    int id;
+    String id;
     String name;
     String category;
     float unitPrice;
 
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
+                ", unitPrice=" + unitPrice +
+                '}';
+    }
 
     public Product() {
 
     }
-    public Product(int id, String name, String category, float unitPrice) {
+    public Product(String id, String name, String category, float unitPrice) {
         this.id = id;
         this.name = name;
         this.category = category;
         this.unitPrice = unitPrice;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

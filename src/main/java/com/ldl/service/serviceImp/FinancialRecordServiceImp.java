@@ -14,7 +14,7 @@ public class FinancialRecordServiceImp implements FinancialRecordService {
     FinancialRecordMapper financialRecordMapper;
 
     @Override
-    public FinancialRecord selectById(Integer recordId) {
+    public FinancialRecord selectById(String recordId) {
         return financialRecordMapper.selectById(recordId);
     }
 
@@ -24,7 +24,7 @@ public class FinancialRecordServiceImp implements FinancialRecordService {
     }
 
     @Override
-    public FinancialRecord selectBySid(Integer sid) {
+    public FinancialRecord selectBySid(String sid) {
         return financialRecordMapper.selectBySid(sid);
     }
 
@@ -39,7 +39,7 @@ public class FinancialRecordServiceImp implements FinancialRecordService {
     }
 
     @Override
-    public int delete(Integer recordId) {
+    public int delete(String recordId) {
         return financialRecordMapper.delete(recordId);
     }
 }

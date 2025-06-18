@@ -31,18 +31,21 @@ public class LoginController {
 //    }
 
     @PostMapping("/login")
-    public String login(@RequestParam String username,
+    public String login(@RequestParam String id,
                         @RequestParam String password,
                         @RequestParam Integer roleId,
                         HttpSession session,
                         Model model) {
 
+        System.out.println(id);
+        System.out.println(password);
         // 根据用户名和角色ID验证用户
-        EduSupermarketUsers user = usersService.loginByUsernameAndRole(username, password, roleId);
+        EduSupermarketUsers user = usersService.loginByIdAndRole(id, password, roleId);
 
         if (user != null) {
             // 登录成功，将用户信息存入Session
             session.setAttribute("currentUser", user);
+            System.out.println(user.toString());
             // 重定向到用户角色对应的首页
             return "redirect:" + user.getRole().getHomePage();
         } else {

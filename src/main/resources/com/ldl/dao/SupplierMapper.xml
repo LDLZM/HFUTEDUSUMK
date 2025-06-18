@@ -16,7 +16,7 @@
         SELECT * FROM suppliers
     </select>
 
-    <select id="getSupplierById" resultMap="supplierResultMap" parameterType="int">
+    <select id="getSupplierById" resultMap="supplierResultMap" >
         SELECT * FROM suppliers WHERE supplier_id = #{supplierId}
     </select>
 
@@ -37,7 +37,7 @@
         WHERE supplier_id = #{supplierId}
     </update>
 
-    <delete id="deleteSupplier" parameterType="int">
+    <delete id="deleteSupplier">
         DELETE FROM suppliers WHERE supplier_id = #{supplierId}
     </delete>
 

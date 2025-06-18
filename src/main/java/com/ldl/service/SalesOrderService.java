@@ -6,7 +6,7 @@ import java.util.Map;
 
     public interface SalesOrderService {
         // 根据ID查询订单
-        SalesOrder selectById(Integer orderId);
+        SalesOrder selectById(String orderId);
         // 查询所有订单
         List<SalesOrder> selectAll();
 
@@ -19,9 +19,9 @@ import java.util.Map;
         int update(SalesOrder order);
 
         // 删除订单
-        int delete(Integer orderId);
+        int delete(String orderId);
 
         // 支付订单
-        int payOrder(Integer orderId, String paymentMethod);
+        int payOrder(String orderId, String paymentMethod);
     }
 

@@ -3,7 +3,7 @@ package com.ldl.entity;
 import java.sql.Timestamp;
 
 public class Supplier {
-    private int supplierId;
+    private String supplierId;
     private String supplierName;
     private String contactPerson;
     private String contactPhone;
@@ -14,7 +14,7 @@ public class Supplier {
     // 构造方法、Getter和Setter
     public Supplier() {}
 
-    public Supplier(int supplierId, String supplierName, String contactPerson,
+    public Supplier(String supplierId, String supplierName, String contactPerson,
                     String contactPhone, String contactEmail, int status, Timestamp createdAt) {
         this.supplierId = supplierId;
         this.supplierName = supplierName;
@@ -26,11 +26,11 @@ public class Supplier {
     }
 
     // Getter和Setter
-    public int getSupplierId() {
+    public String getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
 

@@ -5,11 +5,30 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.sql.Timestamp;
 
 public class Inventory {
-    private int inventoryId;
-    private int productId;
+    private String inventoryId;
+    private String productId;
     private int quantity;
     private Timestamp lastUpdated;
     private Product product;
+    private String event;
+
+    public Inventory(String inventoryId, String productId, int quantity, Timestamp lastUpdated, Product product, String event) {
+        this.inventoryId = inventoryId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.lastUpdated = lastUpdated;
+        this.product = product;
+        this.event = event;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
     public Inventory(){
 
     }
@@ -35,7 +54,7 @@ public class Inventory {
                 '}';
     }
 
-    public Inventory(int inventoryId, int productId, int quantity, Timestamp lastUpdated, Product product) {
+    public Inventory(String inventoryId, String productId, int quantity, Timestamp lastUpdated, Product product) {
         this.inventoryId = inventoryId;
         this.productId = productId;
         this.quantity = quantity;
@@ -43,19 +62,19 @@ public class Inventory {
         this.product = product;
     }
 
-    public int getInventoryId() {
+    public String getInventoryId() {
         return inventoryId;
     }
 
-    public void setInventoryId(int inventoryId) {
+    public void setInventoryId(String inventoryId) {
         this.inventoryId = inventoryId;
     }
 
-    public int getProductId() {
+    public String getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(String productId) {
         this.productId = productId;
     }
 

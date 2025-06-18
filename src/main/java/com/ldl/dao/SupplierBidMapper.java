@@ -14,13 +14,13 @@ public interface SupplierBidMapper {
     List<SupplierBid> getAllBids();
 
     // 根据ID查询
-    SupplierBid getBidById(int bidId);
+    SupplierBid getBidById(String bidId);
 
     // 根据需求ID查询报价
-    List<SupplierBid> getBidsByApprovedId(int approvedId);
+    List<SupplierBid> getBidsByApprovedId(String approvedId);
 
     // 根据供应商ID查询报价
-    List<SupplierBid> getBidsBySupplierId(int supplierId);
+    List<SupplierBid> getBidsBySupplierId(String supplierId);
 
     // 添加报价
     void insertBid(SupplierBid bid);

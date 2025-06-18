@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class FinancialRecord {
-    private Integer recordId;
-    private Integer orderId;
-    private Integer bidId;
+    private String recordId;
+    private String orderId;
+    private String bidId;
     private Integer transactionType;
     private BigDecimal amount;
     private Date transactionDate;
@@ -16,47 +16,44 @@ public class FinancialRecord {
     private Date createdAt;
     private Date updatedAt;
 
-    // 构造函数、getter和setter方法
-    public FinancialRecord() {}
-
-    public FinancialRecord(Integer recordId, Integer orderId, Integer bidId, Integer transactionType,
-                           BigDecimal amount, Date transactionDate, String paymentMethod,
-                           String description, Integer status, Date createdAt, Date updatedAt) {
-        this.recordId = recordId;
-        this.orderId = orderId;
-        this.bidId = bidId;
-        this.transactionType = transactionType;
-        this.amount = amount;
-        this.transactionDate = transactionDate;
-        this.paymentMethod = paymentMethod;
-        this.description = description;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+    @Override
+    public String toString() {
+        return "FinancialRecord{" +
+                "recordId='" + recordId + '\'' +
+                ", orderId=" + orderId +
+                ", bidId=" + bidId +
+                ", transactionType=" + transactionType +
+                ", amount=" + amount +
+                ", transactionDate=" + transactionDate +
+                ", paymentMethod='" + paymentMethod + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 
-    // getter和setter方法
-    public Integer getRecordId() {
+    public String getRecordId() {
         return recordId;
     }
 
-    public void setRecordId(Integer recordId) {
+    public void setRecordId(String recordId) {
         this.recordId = recordId;
     }
 
-    public Integer getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 
-    public Integer getBidId() {
+    public String getBidId() {
         return bidId;
     }
 
-    public void setBidId(Integer bidId) {
+    public void setBidId(String bidId) {
         this.bidId = bidId;
     }
 
@@ -121,6 +118,23 @@ public class FinancialRecord {
     }
 
     public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public FinancialRecord() {
+    }
+
+    public FinancialRecord(String recordId, String orderId, String bidId, Integer transactionType, BigDecimal amount, Date transactionDate, String paymentMethod, String description, Integer status, Date createdAt, Date updatedAt) {
+        this.recordId = recordId;
+        this.orderId = orderId;
+        this.bidId = bidId;
+        this.transactionType = transactionType;
+        this.amount = amount;
+        this.transactionDate = transactionDate;
+        this.paymentMethod = paymentMethod;
+        this.description = description;
+        this.status = status;
+        this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
 }

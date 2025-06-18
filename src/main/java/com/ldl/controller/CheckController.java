@@ -60,6 +60,7 @@ public class CheckController {
     @GetMapping("/ProductCheckList")
     public String showProductReviewForm(Model model) {
         List<ProductCheck> productChecks = productCheckService.getAllProductCheck();
+        System.out.println(productChecks.toString());
         model.addAttribute("productChecks", productChecks);
         return "check/ProductreviewList";
     }
@@ -67,7 +68,8 @@ public class CheckController {
 
     // 显示审核页面
     @GetMapping("/BidReview/{id}")
-    public String showBidreviewForm(@PathVariable("id") Integer demandId, Model model) {
+    public String showBidreviewForm(@PathVariable("id") String demandId, Model model) {
+        System.out.println(demandId);
         SupplierBid bid = supplierBidService.getBidById(demandId);
         System.out.printf(bid.toString());
         Supplier supplier = bid.getSupplier();
@@ -80,13 +82,16 @@ public class CheckController {
 
     // 处理审核提交
     @PostMapping("/processBidReview")
-    public String processBidreview(@RequestParam("bidId") Integer demandId,
-                                @RequestParam("isWinning") Integer isClosed,
+    public String processBidreview(@RequestParam("bidId") String bidId,
+                                @RequestParam("isWinning") Integer isWinning,
                                 RedirectAttributes redirectAttributes) {
 
         try {
             // 调用服务层处理审核逻辑
-            supplierBidService.reviewBid(demandId, isClosed);
+            System.out.println("=================");
+            System.out.println(bidId);
+            System.out.println(isWinning);
+            supplierBidService.reviewBid(bidId, isWinning);
             redirectAttributes.addFlashAttribute("message", "审核成功");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "审核失败: " + e.getMessage());
@@ -116,8 +121,7 @@ public class CheckController {
 
     // 显示审核页面
     @GetMapping("/Demandreview/{id}")
-    public String showReviewForm(@PathVariable("id") Integer demandId, Model model) {
-        System.out.printf("!!!!!!!!!!!1");
+    public String showReviewForm(@PathVariable("id") String demandId, Model model) {
         PurchaseDemand demand = purchaseDemandService.getDemandById(demandId);
         model.addAttribute("demand", demand);
         return "check/Demandreview";
@@ -125,11 +129,13 @@ public class CheckController {
 
     // 处理审核提交
     @PostMapping("/processDemandreview")
-    public String processReview(@RequestParam("demandId") Integer demandId,
+    public String processReview(@RequestParam("demandId") String demandId,
                                 @RequestParam("isClosed") Integer isClosed,
                                 RedirectAttributes redirectAttributes) {
 
         try {
+            System.out.println(demandId);
+            System.out.println(isClosed);
             // 调用服务层处理审核逻辑
             purchaseDemandService.reviewDemand(demandId, isClosed);
             redirectAttributes.addFlashAttribute("message", "审核成功");
@@ -145,7 +151,7 @@ public class CheckController {
 
     // 显示审核页面
     @GetMapping("/Productreview/{id}")
-    public String showProductReviewForm(@PathVariable("id") Integer id, Model model) {
+    public String showProductReviewForm(@PathVariable("id") String id, Model model) {
         System.out.printf("/Productreview/{id}");
         ProductCheck productCheck = productCheckService.getProductCheckById(id);
         model.addAttribute("productCheck", productCheck);
@@ -154,12 +160,14 @@ public class CheckController {
 
     // 处理审核提交
     @PostMapping("/processProductReview")
-    public String processProductReview(@RequestParam("id") Integer id,
+    public String processProductReview(@RequestParam("id") String id,
                                 @RequestParam("isOK") Integer isOK,
                                 @RequestParam("remarks")String remarks,
                                 RedirectAttributes redirectAttributes) {
 
         try {
+            System.out.println(id);
+            System.out.println(isOK);
             // 调用服务层处理审核逻辑
             productCheckService.reviewProduct(id, isOK, remarks);
             redirectAttributes.addFlashAttribute("message", "审核成功");
