@@ -1,11 +1,11 @@
 package com.ldl.controller;
 
-import com.ldl.entity.EduSupermarketRoles;
-import com.ldl.entity.EduSupermarketUsers;
+import com.ldl.ApiResponse;
 import com.ldl.entity.Product;
-import com.ldl.entity.SalesOrder;
 import com.ldl.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,6 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-
     @GetMapping("/list")
     public String listProducts(@RequestParam(value = "keyword", required = false) String keyword,
                                Model model) {
@@ -26,11 +25,7 @@ public class ProductController {
 
         if (keyword != null && !keyword.trim().isEmpty()) {
             // 如果有关键词，则进行搜索
-            System.out.println("search");
-            System.out.println(keyword);
             products = productService.searchProducts(keyword);
-            System.out.println(products.toString());
-
             model.addAttribute("keyword", keyword);
         } else {
             // 没有关键词则获取所有商品
@@ -43,23 +38,6 @@ public class ProductController {
         // 返回视图名称
         return "products/list";
     }
-//    @GetMapping("/list")
-//    public String listProducts(Model model){
-//        List<Product> products =productService.getAllProduct();
-//        model.addAttribute("products",products);
-//        return "products/list";
-//    }
-//
-//    @GetMapping("/add")
-//    public String showAddForm(Model model) {
-//        return "products/add";
-//    }
-//
-//    @PostMapping("/add")
-//    public String addProduct(@ModelAttribute Product product){
-//        productService.insertProduct(product);
-//        return "redirect:/products/list";
-//    }
 
     // 显示编辑商品表单
     @GetMapping("/edit/{id}")
@@ -81,6 +59,9 @@ public class ProductController {
             Model model) {
 
         try {
+            // 验证价格是否合理
+            validatePrice(product.getUnitPrice());
+
             // 更新商品信息
             productService.updateProduct(product);
 
@@ -92,19 +73,42 @@ public class ProductController {
         } catch (Exception e) {
             // 添加错误消息
             model.addAttribute("errorMsg", "商品更新失败: " + e.getMessage());
+            model.addAttribute("product", product); // 回显表单数据
 
             // 回到编辑页面
             return "products/edit";
         }
     }
-    @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable("id")String id){
-        productService.deleteProduct(id);
-        return "redirect:/products/list";
+
+    // 验证价格是否合理
+    private void validatePrice(float price) {
+        if (price <= 0) {
+            throw new RuntimeException("价格必须大于0");
+        }
+
+        // 检查价格是否超出合理范围（例如：超过10000元）
+        if (price > 10000) {
+            throw new RuntimeException("价格过高，请确认是否合理");
+        }
     }
 
-
-
+    // 处理删除商品请求，返回JSON响应
+    @PostMapping("/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<?> deleteProduct(@PathVariable("id") String id) {
+        try {
+            boolean result = productService.deleteProduct(id);
+            if (result) {
+                return ResponseEntity.ok().body(new ApiResponse(true, "商品下架成功"));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(new ApiResponse(false, "商品有关联数据，无法下架"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse(false, "下架商品失败: " + e.getMessage()));
+        }
+    }
 
     // 显示编辑商品表单
     @GetMapping("/add")
@@ -112,13 +116,19 @@ public class ProductController {
         // 返回编辑页面
         return "products/add";
     }
-    // 显示编辑商品表单
+
+    // 处理添加商品请求
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute Product product) {
-        productService.insertProduct(product);
-        return "redirect:/products/list";
+    public ResponseEntity<?> addProduct(@ModelAttribute Product product) {
+        try{
+            // 验证价格是否合理
+            validatePrice(product.getUnitPrice());
+
+            productService.insertProduct(product);
+            return  ResponseEntity.ok().body(new ApiResponse(true,"商品添加成功"));
+        }catch (RuntimeException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(false,e.getMessage()));
+        }
     }
-
-
-
 }

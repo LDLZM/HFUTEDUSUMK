@@ -11,6 +11,8 @@ public interface SalesOrderMapper {
     // 查询所有订单
     List<SalesOrder> selectAll();
 
+    List<SalesOrder> selectByPid(String pid);
+
     // 根据条件查询订单
     //List<SalesOrder> getByCondition(Map<String, Object> params);
     // 创建新订单

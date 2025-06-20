@@ -27,6 +27,9 @@
     </select>
 
 
+    <select id="selectByPid" resultMap="BaseResultMap">
+        SELECT * FROM sales_orders where product_id = #{productId}
+    </select>
     <!-- 插入新订单 -->
     <insert id="insert" parameterType="com.ldl.entity.SalesOrder" useGeneratedKeys="true" keyProperty="orderId">
         INSERT INTO sales_orders (

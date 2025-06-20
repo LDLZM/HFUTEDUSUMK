@@ -5,13 +5,6 @@
   Time: 22:22
   To change this template use File | Settings | File Templates.
 --%>
-<%--
-  Created by IntelliJ IDEA.
-  User: CITS
-  Date: 2025/6/5
-  Time: 20:51
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -166,6 +159,38 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        /* 错误消息样式 */
+        .error-message {
+            color: #ff3333;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* 价格比较提示样式 */
+        .price-hint {
+            margin-top: 8px;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: none;
+        }
+
+        .price-hint.up {
+            background-color: #ffe6e6;
+            color: #cc0000;
+        }
+
+        .price-hint.down {
+            background-color: #e6ffe6;
+            color: #008000;
+        }
+
+        .price-hint.same {
+            background-color: #e6f7ff;
+            color: #0066cc;
+        }
     </style>
 </head>
 <body>
@@ -175,7 +200,7 @@
     </div>
 
     <div class="form-container">
-        <form action="${pageContext.request.contextPath}/products/edit" method="post">
+        <form id="editProductForm" action="${pageContext.request.contextPath}/products/edit" method="post">
             <!-- 隐藏域传递用户ID -->
             <input type="hidden" name="id" value="${product.id}">
 
@@ -253,10 +278,14 @@
                 });
             </script>
 
-
             <div class="form-group">
                 <label>单价:</label>
-                <input type="text" name="unitPrice" required value="${product.unitPrice}">
+                <input type="text" id="unitPrice" name="unitPrice" required value="${product.unitPrice}">
+                <div class="error-message" id="priceError">价格必须为正数</div>
+                <div class="price-hint" id="priceHint">
+                    <span id="priceChangeText"></span>
+                    <span id="priceChangePercent"></span>
+                </div>
             </div>
             <div class="form-actions">
                 <input type="submit" value="提交" class="action-btn">
@@ -266,5 +295,93 @@
         <a href="${pageContext.request.contextPath}/products/list" class="back-link">返回商品列表</a>
     </div>
 </div>
+
+<script>
+    // 页面加载完成后执行
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取价格输入框和相关元素
+        const priceInput = document.getElementById('unitPrice');
+        const priceError = document.getElementById('priceError');
+        const priceHint = document.getElementById('priceHint');
+        const priceChangeText = document.getElementById('priceChangeText');
+        const priceChangePercent = document.getElementById('priceChangePercent');
+        const editForm = document.getElementById('editProductForm');
+
+        // 保存原始价格
+        const originalPrice = parseFloat('${product.unitPrice}');
+
+        // 价格输入框失去焦点时验证
+        priceInput.addEventListener('blur', function() {
+            validatePrice();
+        });
+
+        // 价格输入框输入时实时显示价格变化提示
+        priceInput.addEventListener('input', function() {
+            showPriceChangeHint();
+        });
+
+        // 表单提交时验证
+        editForm.addEventListener('submit', function(e) {
+            if (!validatePrice()) {
+                e.preventDefault(); // 阻止表单提交
+            }
+        });
+
+        // 验证价格格式
+        function validatePrice() {
+            const price = priceInput.value.trim();
+            const pricePattern = /^\d+(\.\d{1,2})?$/;
+
+            if (price === '') {
+                priceError.textContent = '价格不能为空';
+                priceError.style.display = 'block';
+                return false;
+            }
+
+            if (!pricePattern.test(price)) {
+                priceError.style.display = 'block';
+                return false;
+            }
+
+            if (parseFloat(price) <= 0) {
+                priceError.textContent = '价格必须大于0';
+                priceError.style.display = 'block';
+                return false;
+            }
+
+            // 价格合理，隐藏错误消息
+            priceError.style.display = 'none';
+            return true;
+        }
+
+        // 显示价格变化提示
+        function showPriceChangeHint() {
+            const price = parseFloat(priceInput.value.trim());
+
+            // 如果价格为空或不是数字，隐藏提示
+            if (isNaN(price)) {
+                priceHint.style.display = 'none';
+                return;
+            }
+
+
+            // 设置提示内容和样式
+            if (price > originalPrice) {
+                priceChangeText.textContent = '价格上涨';
+                priceHint.className = 'price-hint up';
+                priceHint.style.display = 'block';
+            } else if (price < originalPrice && price>0) {
+                priceChangeText.textContent = '价格下降';
+                priceHint.className = 'price-hint down';
+                priceHint.style.display = 'block';
+            } else if( price == originalPrice){
+                priceChangeText.textContent = '价格保持不变';
+                priceChangePercent.textContent = '';
+                priceHint.className = 'price-hint same';
+                priceHint.style.display = 'block';
+            }
+        }
+    });
+</script>
 </body>
 </html>

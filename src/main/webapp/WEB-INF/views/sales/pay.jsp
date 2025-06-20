@@ -173,7 +173,7 @@
                     <option value="支付宝">支付宝</option>
                     <option value="微信">微信</option>
                     <option value="现金">现金</option>
-                    <option value="其他">其他</option>
+                    <option value="其他">校园卡</option>
                 </select>
             </div>
             <div class="form-actions">

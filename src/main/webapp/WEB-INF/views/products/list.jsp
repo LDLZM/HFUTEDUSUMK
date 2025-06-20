@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: CITS
-  Date: 2025/6/5
-  Time: 22:02
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -116,6 +109,27 @@
         .action-link:hover {
             text-decoration: underline;
         }
+
+        /* 添加提示框样式 */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .alert-success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+        .alert-danger {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
     </style>
 </head>
 <body>
@@ -137,6 +151,11 @@
         </form>
     </div>
 
+    <!-- 添加提示框 -->
+    <div id="alertBox" class="alert">
+        <span id="alertMessage"></span>
+    </div>
+
     <table>
         <tr>
             <th>商品ID</th>
@@ -146,19 +165,80 @@
             <th class="action">操作</th>
         </tr>
         <c:forEach items="${products}" var="product">
-            <tr>
+            <tr id="productRow_${product.id}">
                 <td>${product.id}</td>
                 <td>${product.name}</td>
                 <td>${product.category}</td>
                 <td>${product.unitPrice}</td>
                 <td class="action">
                     <a href="${pageContext.request.contextPath}/products/edit/${product.id}" class="action-link">编辑</a>
-                    <a href="${pageContext.request.contextPath}/products/delete/${product.id}" class="action-link">下架</a>
+                    <a href="javascript:void(0);" onclick="deleteProduct('${product.id}', '${product.name}')" class="action-link">下架</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
 </div>
+
+<script>
+    // 显示提示框
+    function showAlert(message, isSuccess) {
+        const alertBox = document.getElementById('alertBox');
+        const alertMessage = document.getElementById('alertMessage');
+
+        // 设置提示内容和样式
+        alertMessage.textContent = message;
+        if (isSuccess) {
+            alertBox.className = 'alert alert-success';
+        } else {
+            alertBox.className = 'alert alert-danger';
+        }
+
+        // 显示提示框
+        alertBox.style.display = 'block';
+
+        // 3秒后隐藏提示框
+        setTimeout(() => {
+            alertBox.style.display = 'none';
+        }, 3000);
+    }
+
+    // 删除商品
+    function deleteProduct(productId, productName) {
+        // 确认是否要删除
+        if (!confirm(`确定要下架商品吗？`)) {
+            return;
+        }
+
+        // 发送AJAX请求
+        fetch('${pageContext.request.contextPath}/products/delete/' + productId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('请检查是否有依赖此商品的其他信息');
+                }
+            })
+            .then(data => {
+                if (data.success) {
+                    // 删除成功，显示成功消息并从表格中移除该行
+                    showAlert(data.message, true);
+                    document.getElementById('productRow_' + productId).remove();
+                } else {
+                    // 删除失败，显示错误消息
+                    showAlert(data.message, false);
+                }
+            })
+            .catch(error => {
+                // 请求异常，显示错误消息
+                showAlert('下架商品失败: ' + error.message, false);
+            });
+    }
+</script>
 </body>
 </html>
-
