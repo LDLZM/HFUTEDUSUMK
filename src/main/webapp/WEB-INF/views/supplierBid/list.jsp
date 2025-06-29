@@ -139,6 +139,7 @@
 
     <table>
         <tr>
+            <th>报价编号</th>
             <th>供应商</th>
             <th>报价</th>
             <th>交货天数</th>
@@ -148,6 +149,7 @@
         </tr>
         <c:forEach items="${bids}" var="bid">
             <tr>
+                <td>${bid.bidId}</td>
                 <td>${bid.supplier.supplierName}</td>
                 <td>${bid.bidPrice}</td>
                 <td>${bid.deliveryDays}</td>

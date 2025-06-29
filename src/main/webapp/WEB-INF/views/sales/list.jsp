@@ -35,7 +35,12 @@
             text-align: center;
             margin-bottom: 30px;
         }
-
+        .action-link.disabled-link {
+            color: gray;
+            cursor: not-allowed;
+            pointer-events: none;
+            text-decoration: none;
+        }
         .school-logo {
             width: 120px;
             height: 100px;
@@ -133,9 +138,6 @@
         <div class="action-btn-group">
             <a href="${pageContext.request.contextPath}/sales/add" class="action-btn">添加销售记录</a>
         </div>
-        <div class="action-btn-group">
-            <a href="${pageContext.request.contextPath}/sales/refund" class="action-btn">退货处理</a>
-        </div>
 
         <!-- 搜索表单 -->
         <form action="${pageContext.request.contextPath}/sales/list" method="get">
@@ -149,14 +151,15 @@
 
     <table>
         <tr>
-            <th>订单号</th>
-            <th>订单日期</th>
-            <th>产品编号</th>
+            <th>销售号</th>
+            <th>销售日期</th>
+            <th>商品编号</th>
             <th>销售数量</th>
             <th>总金额</th>
             <th>支付方式</th>
             <th>支付状态</th>
             <th>备注</th>
+            <th>退款状态</th>
             <th class="action">操作</th>
         </tr>
         <c:forEach items="${salesList}" var="sale">
@@ -174,11 +177,33 @@
                     </c:choose>
                 </td>
                 <td>${sale.remarks}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${sale.refundState == 0}">无退货申请</c:when>
+                        <c:when test="${sale.refundState == 1}">申请退货中</c:when>
+                        <c:when test="${sale.refundState == 2}">拒绝退货</c:when>
+                        <c:when test="${sale.refundState == 3}">同意退货</c:when>
+                    </c:choose>
+                </td>
                 <td class="action">
-                    <c:if test="${sale.paymentStatus == 0}">
-                        <a href="${pageContext.request.contextPath}/sales/pay/${sale.orderId}" class="action-link">支付</a>
-                    </c:if>
-                    <a href="${pageContext.request.contextPath}/sales/delete/${sale.orderId}" class="action-link">删除</a>
+                    <a href="${pageContext.request.contextPath}/sales/pay/${sale.orderId}"
+                       class="action-link ${sale.paymentStatus == 0 ? '' : 'disabled-link'}"
+                        ${sale.paymentStatus == 0 ? '' : 'disabled'}>
+                        支付
+                    </a>
+
+                    <a href="${pageContext.request.contextPath}/sales/delete/${sale.orderId}"
+                       class="action-link ${sale.paymentStatus == 0 ? '' : 'disabled-link'}"
+                        ${sale.paymentStatus == 0 ? '' : 'disabled'}>
+                        删除
+                    </a>
+
+
+                    <a href="${pageContext.request.contextPath}/sales/refund/${sale.orderId}"
+                       class="action-link ${sale.refundState == 0 and sale.paymentStatus == 1 ? '' : 'disabled-link'}"
+                        ${sale.paymentStatus == 1 ? '' : 'disabled'}>
+                        申请退货
+                    </a>
                 </td>
             </tr>
         </c:forEach>

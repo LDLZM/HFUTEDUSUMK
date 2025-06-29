@@ -173,7 +173,7 @@
   </c:if>
 
   <div class="page-header">
-    <h1>为 [${demand.product.name}] 提交报价</h1>
+    <h1>为 [${demand.approvedId}] 提交报价</h1>
     <p>需求数量: ${demand.demandQuantity}</p>
     <p>截止日期: ${demand.deadlineDate}</p>
   </div>
@@ -190,7 +190,7 @@
 
       <div class="form-group">
         <label>报价单编号</label>
-        <input type="text" name="bidId" >
+        <input type="text" name="bidId" placeholder="示例BS001AD2506004">
       </div>
       <div class="form-group">
         <label>报价金额 (元):</label>

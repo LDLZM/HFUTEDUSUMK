@@ -194,7 +194,7 @@
         <form id="productForm" action="${pageContext.request.contextPath}/products/add" method="post">
             <div class="form-group">
                 <label>商品号:</label>
-                <input type="text" name="id" required  placeholder="请输入九位编码"  onchange="checkProductId(this)">
+                <input type="text" name="id" required  placeholder="示例G01010108"  onchange="checkProductId(this)">
                 <div id="idError" class="error-message"></div>
             </div>
             <script>

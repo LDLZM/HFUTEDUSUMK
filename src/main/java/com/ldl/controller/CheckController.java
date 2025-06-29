@@ -1,16 +1,14 @@
 package com.ldl.controller;
 
 import com.ldl.entity.*;
-import com.ldl.service.ApprovedPurchaseDemandService;
-import com.ldl.service.ProductCheckService;
-import com.ldl.service.PurchaseDemandService;
-import com.ldl.service.SupplierBidService;
+import com.ldl.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -25,11 +23,55 @@ public class CheckController {
     ApprovedPurchaseDemandService approvedPurchaseDemandService;
     @Autowired
     ProductCheckService productCheckService;
+    @Autowired
+    SalesOrderService salesOrderService;
 
     @GetMapping("/what")
     public String checkWhat(){
         return "check/what";
     }
+
+    @GetMapping("/Refundlist")
+    public String checkRefundList(Model model) {
+        List<SalesOrder> salesOrders = salesOrderService.selectAllRefund();
+
+// 现在salesOrders包含了所有退款订单
+        System.out.println(salesOrders);
+        model.addAttribute("salesList", salesOrders);
+        return "check/Refundlist";
+    }
+
+    // 处理审核提交
+//    @PostMapping("/processRefundReview")
+//    public String processRefundReview(@RequestParam("id") String id,
+//                                       @RequestParam("isOK") Integer isOK,
+//                                       @RequestParam("remarks")String remarks,
+//                                       RedirectAttributes redirectAttributes) {
+//
+//        try {
+//            System.out.println(id);
+//            System.out.println(isOK);
+//            // 调用服务层处理审核逻辑
+//            productCheckService.reviewProduct(id, isOK, remarks);
+//            redirectAttributes.addFlashAttribute("message", "审核成功");
+//        } catch (Exception e) {
+//            redirectAttributes.addFlashAttribute("error", "审核失败: " + e.getMessage());
+//        }
+//
+//        return "redirect:/check/ProductCheckList";
+//    }
+
+
+    // 显示审核页面
+    @GetMapping("/RefundReview/{id}")
+    public String showRefundForm(@PathVariable("id") String id, Model model) {
+        System.out.println(id);
+        SalesOrder order = salesOrderService.selectById(id);
+        System.out.println(order.toString());
+        model.addAttribute("order",order);
+        return "check/Refundreview";
+    }
+
 
     @GetMapping("/Demandlist")
     public String checkList(@RequestParam(required = false) String keyword,
@@ -191,20 +233,25 @@ public class CheckController {
 
 
 
+    // 处理审核提交
+    @PostMapping("/processRefundReview")
+    public String processRefundreview(@RequestParam("id") String orderId,
+                                @RequestParam("isOK") Integer isOK,
+                                RedirectAttributes redirectAttributes) {
 
+        try {
+            System.out.println(orderId);
+            System.out.println(isOK);
+            // 调用服务层处理审核逻辑
+            salesOrderService.reviewrefund(orderId,isOK);
+            //purchaseDemandService.reviewDemand(demandId, isClosed);
+            redirectAttributes.addFlashAttribute("message", "审核成功");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "审核失败: " + e.getMessage());
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
+        return "redirect:/check/Refundlist";
+    }
 
 
 

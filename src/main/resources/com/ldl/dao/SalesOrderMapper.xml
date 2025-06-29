@@ -14,6 +14,7 @@
         <result column="payment_method" property="paymentMethod" />
         <result column="payment_status" property="paymentStatus" />
         <result column="remarks" property="remarks"/>
+        <result column="refund_state" property="refundState"/>
     </resultMap>
 
     <!-- 根据ID查询订单 -->
@@ -67,4 +68,24 @@
             payment_method = #{paymentMethod}
         WHERE order_id = #{orderId}
     </update>
+
+    <update id="refund">
+        update sales_orders
+        set
+            refund_state = 1
+        WHERE order_id = #{orderId}
+    </update>
+
+    <update id="reviewrefund">
+        update sales_orders
+        set
+            refund_state = #{isOK}
+        WHERE order_id =#{orderId}
+    </update>
+
+    <select id="selectAllRefund" resultMap="BaseResultMap">
+        select *
+        from sales_orders
+        where refund_state != 0
+    </select>
 </mapper>

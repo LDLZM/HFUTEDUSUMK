@@ -146,7 +146,7 @@
             <div class="form-group">
                 <label>需求编号:</label>
                 <input type="text" name="demandId" required minlength="8" maxlength="8"
-                       title="需求编号必须为8位" id="demandIdInput">
+                       title="需求编号必须为8位" id="demandIdInput" placeholder="示例：D2506002">
                 <div class="error-message" id="demandIdError">需求编号必须为8位</div>
             </div>
 

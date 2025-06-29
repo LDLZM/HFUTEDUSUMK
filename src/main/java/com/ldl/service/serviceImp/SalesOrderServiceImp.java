@@ -42,4 +42,22 @@ public class SalesOrderServiceImp implements SalesOrderService {
     public int payOrder(String orderId, String paymentMethod) {
         return salesOrderMapper.payOrder(orderId,paymentMethod);
     }
+
+    @Override
+    public List<SalesOrder> selectAllRefund() {
+        return salesOrderMapper.selectAllRefund();
+    }
+
+    @Override
+    public int refund(String orderId) {
+        return salesOrderMapper.refund(orderId);
+    }
+
+    @Override
+    public int reviewrefund(String orderId, int isOK) {
+        System.out.println("reviewrefund");
+        System.out.println(orderId);
+        System.out.println(isOK);
+        return salesOrderMapper.reviewrefund(orderId,isOK);
+    }
 }

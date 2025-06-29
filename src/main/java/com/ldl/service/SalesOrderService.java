@@ -23,5 +23,12 @@ import java.util.Map;
 
         // 支付订单
         int payOrder(String orderId, String paymentMethod);
+
+
+        List<SalesOrder> selectAllRefund();
+        int refund(String orderId);
+        int reviewrefund(String orderId,int isOK);
+
+
     }
 

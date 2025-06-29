@@ -13,19 +13,41 @@ public class SalesOrder {
     private String paymentMethod;
     private Integer paymentStatus;
     private String remarks;
+    private int refundState;
 
     @Override
     public String toString() {
         return "SalesOrder{" +
                 "orderId='" + orderId + '\'' +
                 ", orderDate=" + orderDate +
-                ", productId=" + productId +
+                ", productId='" + productId + '\'' +
                 ", quantity=" + quantity +
                 ", totalAmount=" + totalAmount +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", paymentStatus=" + paymentStatus +
                 ", remarks='" + remarks + '\'' +
+                ", refundState=" + refundState +
                 '}';
+    }
+
+    public int getRefundState() {
+        return refundState;
+    }
+
+    public void setRefundState(int refundState) {
+        this.refundState = refundState;
+    }
+
+    public SalesOrder(String orderId, Timestamp orderDate, String productId, Integer quantity, float totalAmount, String paymentMethod, Integer paymentStatus, String remarks, int refundState) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.totalAmount = totalAmount;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+        this.remarks = remarks;
+        this.refundState = refundState;
     }
 
     public String getOrderId() {

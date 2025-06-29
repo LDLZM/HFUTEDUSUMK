@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>系统登录入口</title>
+    <title>系统登录入口 - 智能助手</title>
     <style>
         /* 全局样式重置 */
         * {
@@ -22,6 +22,7 @@
             min-height: 100vh;
             background-color: rgb(244, 244, 249);
             padding: 20px;
+            position: relative;
         }
 
         /* 登录卡片：纯白底色+精致阴影 */
@@ -34,6 +35,7 @@
             max-width: 400px;
             text-align: center;
             transition: all 0.3s ease;
+            margin-bottom: 30px;
         }
 
         /* 卡片悬停：强化上浮感和阴影扩散 */
@@ -91,7 +93,7 @@
 
         /* 页脚样式：优化链接展示 */
         .footer {
-            margin-top: 40px;
+            margin-top: 20px;
             color: #999;
             font-size: 14px;
             text-align: center;
@@ -117,21 +119,144 @@
         /* 友情链接标题样式：红色+半粗体 */
         .footer-title {
             font-weight: 600;
-            color: #ac1618; /* 改为红色（主色调） */
+            color: #ac1618;
             margin-bottom: 8px;
             font-size: 15px;
+        }
+
+        /* 大模型助手容器 */
+        .ai-assistant {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .ai-assistant:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* 助手标题 */
+        .ai-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .ai-title i {
+            color: #ac1618;
+            margin-right: 8px;
+            font-size: 22px;
+        }
+
+        /* 消息容器 */
+        .messages-container {
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+        }
+
+        /* 消息样式 */
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: #ac1618;
+            color: white;
+            float: right;
+            text-align: right;
+        }
+
+        .ai-message {
+            background-color: #f0f0f0;
+            color: #333;
+            float: left;
+        }
+
+        /* 清除浮动 */
+        .clearfix {
+            clear: both;
+        }
+
+        /* 输入框组 */
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            resize: none;
+        }
+
+        .send-btn {
+            padding: 0 20px;
+            background-color: #ac1618;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            background-color: #8b1214;
+        }
+
+        .send-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* 加载状态 */
+        .loading {
+            text-align: center;
+            padding: 10px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* 提示文本 */
+        .hint-text {
+            font-size: 14px;
+            color: #888;
+            margin-top: 10px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="login-card">
-        <h1 class="page-title">主页</h1> <!-- "主页"标题 -->
+        <h1 class="page-title">主页</h1>
         <p class="sub-title">欢迎访问合肥工业大学教育超市管理信息系统</p>
         <a href="/toLogin" class="login-btn">进入登录页面</a>
     </div>
+
+
     <div class="footer">
-        <div class="footer-title">友情链接</div> <!-- "友情链接"标题 -->
+        <div class="footer-title">友情链接</div>
         <a href="https://www.hfut.edu.cn" target="_blank">合肥工业大学</a>
         <span class="footer-span">|</span>
         <a href="https://cwc.hfut.edu.cn" target="_blank">合肥工业大学财务处</a>
@@ -141,5 +266,24 @@
         <a href="https://zwb.hfut.edu.cn/" target="_blank">合肥工业大学总务部</a>
     </div>
 </div>
+
+<script src="https://lf-cdn.coze.cn/obj/unpkg/flow-platform/chat-app-sdk/1.2.0-beta.10/libs/cn/index.js"></script>
+<script>
+    new CozeWebSDK.WebChatClient({
+        config: {
+            bot_id: '7521240449312063515',
+        },
+        componentProps: {
+            title: 'Coze',
+        },
+        auth: {
+            type: 'token',
+            token: 'pat_0UJzLODfShms56AIrLWpwCrXUx19qjMgFYgEPBmjAwR4pom9jML68Mjc9BGwbPrw',
+            onRefreshToken: function () {
+                return 'pat_0UJzLODfShms56AIrLWpwCrXUx19qjMgFYgEPBmjAwR4pom9jML68Mjc9BGwbPrw'
+            }
+        }
+    });
+</script>
 </body>
 </html>

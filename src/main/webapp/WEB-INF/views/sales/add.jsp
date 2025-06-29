@@ -11,7 +11,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>添加商品</title>
+    <title>添加销售记录</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -141,6 +141,14 @@
             box-sizing: border-box;
         }
 
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
         .form-actions {
             text-align: center;
             margin-top: 20px;
@@ -157,6 +165,13 @@
         .back-link:hover {
             text-decoration: underline;
         }
+
+        /* 错误输入样式 */
+        .form-group input.error,
+        .form-group select.error {
+            border-color: #dc3545;
+            background-color: #fef2f2;
+        }
     </style>
 </head>
 <body>
@@ -167,29 +182,12 @@
     </div>
 
     <div class="form-container">
-        <form action="${pageContext.request.contextPath}/sales/add" method="post">
+        <form action="${pageContext.request.contextPath}/sales/add" method="post" id="salesForm">
             <div class="form-group">
                 <label>销售号</label>
-                <input type="text" name="orderId" required>
+                <input type="text" name="orderId" minlength="12" maxlength="12" placeholder="S01250629010" required title="销售号必须为12位" id="orderId">
+                <div class="error-message" id="orderIdError">销售号必须为12位</div>
             </div>
-<%--            <div class="form-group">--%>
-<%--                <label>日期</label>--%>
-<%--                <input type="text" name="orderDate" required>--%>
-<%--            </div>--%>
-
-<%--            <div class="form-group">--%>
-<%--                <label>商品编号:</label>--%>
-<%--                <select name="productId" required>--%>
-<%--                    <option value="">请选择商品</option>--%>
-<%--                    <c:forEach items="${products}" var="product">--%>
-<%--                        <option value="${product.id}">${product.id} - ${product.name}</option>--%>
-<%--                    </c:forEach>--%>
-<%--                </select>--%>
-<%--            </div>--%>
-<%--            <div class="form-group">--%>
-<%--                <label>商品ID</label>--%>
-<%--                <input type="text" name="productId" required>--%>
-<%--            </div>--%>
             <div class="form-group">
                 <label>商品选择:</label>
                 <select name="productId" id="productSelect" required>
@@ -215,9 +213,12 @@
                     document.getElementById('productName').value = selectedOption.getAttribute('data-name');
                 });
             </script>
+
+
             <div class="form-group">
                 <label>销售数量</label>
-                <input type="text" name="quantity" required>
+                <input type="number" name="quantity" min="1" step="1" required id="quantity">
+                <div class="error-message" id="quantityError">销售数量必须为正整数</div>
             </div>
             <div class="form-group">
                 <label>备注</label>
@@ -231,6 +232,82 @@
             <div class="form-actions">
                 <input type="submit" value="提交" class="action-btn">
             </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const salesForm = document.getElementById('salesForm');
+                    const orderId = document.getElementById('orderId');
+                    const quantity = document.getElementById('quantity');
+
+                    // 销售号输入验证
+                    orderId.addEventListener('input', validateOrderId);
+                    // 数量输入验证
+                    quantity.addEventListener('input', validateQuantity);
+
+                    // 表单提交验证
+                    salesForm.addEventListener('submit', function(e) {
+                        let isValid = true;
+
+                        // 验证销售号
+                        if (!validateOrderId()) {
+                            isValid = false;
+                        }
+
+                        // 验证数量
+                        if (!validateQuantity()) {
+                            isValid = false;
+                        }
+
+                        if (!isValid) {
+                            e.preventDefault();
+                            // 滚动到第一个错误字段
+                            const firstError = document.querySelector('.form-group input.error, .form-group select.error');
+                            if (firstError) firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    });
+
+                    // 验证销售号（12位）
+                    function validateOrderId() {
+                        const input = orderId;
+                        const errorMsg = document.getElementById('orderIdError');
+                        const value = input.value.trim();
+
+                        if (value.length !== 12) {
+                            input.classList.add('error');
+                            errorMsg.style.display = 'block';
+                            return false;
+                        } else {
+                            input.classList.remove('error');
+                            errorMsg.style.display = 'none';
+                            return true;
+                        }
+                    }
+
+                    // 验证数量（正整数）
+                    function validateQuantity() {
+                        const input = quantity;
+                        const errorMsg = document.getElementById('quantityError');
+                        const value = input.value.trim();
+
+                        if (!value) {
+                            input.classList.add('error');
+                            errorMsg.style.display = 'block';
+                            return false;
+                        }
+
+                        const num = Number(value);
+                        if (isNaN(num) || num < 1 || !Number.isInteger(num)) {
+                            input.classList.add('error');
+                            errorMsg.style.display = 'block';
+                            return false;
+                        } else {
+                            input.classList.remove('error');
+                            errorMsg.style.display = 'none';
+                            return true;
+                        }
+                    }
+                });
+            </script>
         </form>
         <a href="${pageContext.request.contextPath}/sales/list" class="back-link">返回列表</a>
     </div>

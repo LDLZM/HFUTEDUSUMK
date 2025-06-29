@@ -13,6 +13,10 @@ public interface SalesOrderMapper {
 
     List<SalesOrder> selectByPid(String pid);
 
+
+
+    List<SalesOrder> selectAllRefund();
+
     // 根据条件查询订单
     //List<SalesOrder> getByCondition(Map<String, Object> params);
     // 创建新订单
@@ -26,4 +30,9 @@ public interface SalesOrderMapper {
 
     // 支付订单
     int payOrder(String orderId, String paymentMethod);
+
+    int refund(String orderId);
+
+    int reviewrefund(String orderId,int isOK);
+
 }

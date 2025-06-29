@@ -1,10 +1,25 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: CITS
+  Date: 2025/6/29
+  Time: 15:55
+  To change this template use File | Settings | File Templates.
+--%>
+<%--
+  Created by IntelliJ IDEA.
+  User: CITS
+  Date: 2025/6/12
+  Time: 10:28
+  To change this template use File | Settings | File Templates.
+--%>
+=
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>添加用户</title>
+    <title>退货审核</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -27,7 +42,12 @@
             text-align: center;
             margin-bottom: 30px;
         }
-
+        .action-link.disabled-link {
+            color: gray;
+            cursor: not-allowed;
+            pointer-events: none;
+            text-decoration: none;
+        }
         .school-logo {
             width: 120px;
             height: 100px;
@@ -109,91 +129,71 @@
         .action-link:hover {
             text-decoration: underline;
         }
-
-        .form-container {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group select {
-            width: 100%;
-            padding: 8px 12px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .form-actions {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            color: #ac1618;
-            text-decoration: none;
-        }
-
-        .back-link:hover {
-            text-decoration: underline;
-        }
     </style>
 </head>
 <body>
 <div class="container">
+    <!-- 显示错误消息 -->
+    <c:if test="${not empty error}">
+        <div class="alert alert-danger error-message" role="alert">
+            <strong>错误:</strong> ${error}
+        </div>
+    </c:if>
     <div class="page-header">
         <img src="../images/xh.png" alt="学校校徽" class="school-logo">
-        <h1>添加用户</h1>
+        <h1>退货审核</h1>
+        <div class="action-btn-group">
+            <a href="${pageContext.request.contextPath}/sales/add" class="action-btn">添加销售记录</a>
+        </div>
     </div>
 
-    <div class="form-container">
-        <form action="${pageContext.request.contextPath}/users/add" method="post">
-            <div class="form-group">
-                <label>用户编码:</label>
-                <input type="text" name="id" placeholder="示例E202103001" required>
-            </div>
-            <div class="form-group">
-                <label>用户名:</label>
-                <input type="text" name="username" required>
-            </div>
-            <div class="form-group">
-                <label>密码:</label>
-                <input type="password" name="password" required>
-            </div>
-            <div class="form-group">
-                <label>角色:</label>
-                <select name="role.roleId">
-                    <c:forEach items="${roles}" var="role">
-                        <option value="${role.roleId}">${role.roleName}</option>
-                    </c:forEach>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>状态:</label>
-                <select name="status">
-                    <option value="1">正常</option>
-                    <option value="0">禁用</option>
-                </select>
-            </div>
-            <div class="form-actions">
-                <input type="submit" value="提交" class="action-btn">
-            </div>
-        </form>
-        <a href="${pageContext.request.contextPath}/users/list" class="back-link">返回列表</a>
-    </div>
+    <table>
+        <tr>
+            <th>销售号</th>
+            <th>销售日期</th>
+            <th>商品编号</th>
+            <th>销售数量</th>
+            <th>总金额</th>
+            <th>支付方式</th>
+            <th>支付状态</th>
+            <th>备注</th>
+            <th>退货状态</th>
+            <th class="action">操作</th>
+        </tr>
+        <c:forEach items="${salesList}" var="sale">
+            <tr>
+                <td>${sale.orderId}</td>
+                <td>${sale.orderDate}</td>
+                <td>${sale.productId}</td>
+                <td>${sale.quantity}</td>
+                <td>${sale.totalAmount}</td>
+                <td>${sale.paymentMethod}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${sale.paymentStatus == 0}">未支付</c:when>
+                        <c:when test="${sale.paymentStatus == 1}">已支付</c:when>
+                    </c:choose>
+                </td>
+                <td>${sale.remarks}</td>
+                <td>
+                    <c:choose>
+                        <c:when test="${sale.refundState == 0}">无退货申请</c:when>
+                        <c:when test="${sale.refundState == 1}">申请退货中</c:when>
+                        <c:when test="${sale.refundState == 2}">拒绝退货</c:when>
+                        <c:when test="${sale.refundState == 3}">同意退货</c:when>
+                    </c:choose>
+                </td>
+                <td class="action">
+                    <c:if test="${sale.refundState == 1}">
+                        <a href="${pageContext.request.contextPath}/check/RefundReview/${sale.orderId}" class="action-link">审核</a>
+                    </c:if>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 </div>
+
+
 </body>
 </html>
+

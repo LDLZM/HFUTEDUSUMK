@@ -98,6 +98,11 @@
         <a href="/check/ProductCheckList" class="audit-btn">
             <i class="fa fa-cubes icon"></i> 审核货物
         </a>
+
+        <a href="/check/Refundlist" class="audit-btn">
+            <i class="fa fa-cubes icon"></i> 审核退货
+        </a>
+
     </div>
 </div>
 </body>

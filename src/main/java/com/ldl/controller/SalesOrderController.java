@@ -22,6 +22,11 @@ public class SalesOrderController {
     InventoryService inventoryService;
     @Autowired
     ProductService productService;
+    @Autowired
+    ProductCheckService productCheckService;
+
+
+
     @GetMapping("/list")
     public String list(Model model) {
         System.out.printf("!!!!!!!!!!!!!!!!!!!!");
@@ -65,13 +70,18 @@ public class SalesOrderController {
 
 
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/refund/{id}")
     public String deleteRole(@PathVariable("id") String id) {
-        FinancialRecord financialRecord = financialRecordService.selectBySid(id);
 
-        financialRecordService.delete(financialRecord.getRecordId());
-        salesOrderService.delete(id);
-        return "redirect:/sales/list";
+        salesOrderService.refund(id);
+//        FinancialRecord financialRecord = financialRecordService.selectBySid(id);
+//        if(financialRecord == null){
+//            salesOrderService.delete(id);
+//        }else{
+//            financialRecordService.delete(financialRecord.getRecordId());
+//            salesOrderService.delete(id);
+//        }
+       return "redirect:/sales/list";
     }
     @GetMapping("/add")
     public String add(Model model){
@@ -87,6 +97,8 @@ public class SalesOrderController {
         salesOrderService.insert(salesOrders);
         return "redirect:/sales/list";
     }
+
+
 
 
 //    // 供应商报价列表
